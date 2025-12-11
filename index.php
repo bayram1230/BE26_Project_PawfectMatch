@@ -109,12 +109,12 @@ if ($result && mysqli_num_rows($result) > 0) {
                             aria-labelledby="profileDropdown">
 
                             <?php if (!isset($_SESSION['user']) && !isset($_SESSION['admin'])): ?>
-                                <li><a class="dropdown-item" href="php/login.php/login.php">Login</a></li>
-                                <li><a class="dropdown-item" href="php/login.php/register.php">Sign Up</a></li>
+                                <li><a class="dropdown-item" href="php/login/login.php">Login</a></li>
+                                <li><a class="dropdown-item" href="php/login/register.php">Sign Up</a></li>
 
                             <?php else: ?>
                                 <li><a class="dropdown-item" href="<?= getProfileLink() ?>">Dashboard</a></li>
-                                <li><a class="dropdown-item" href="php/login.php/logout.php">Logout</a></li>
+                                <li><a class="dropdown-item" href="php/login/logout.php">Logout</a></li>
                             <?php endif; ?>
 
                         </ul>

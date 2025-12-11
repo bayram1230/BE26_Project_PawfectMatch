@@ -1,0 +1,163 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.index-container {
+  padding: 30px 5px;
+}
+/* Navbar Start */
+.custom-navbar {
+  background: linear-gradient(120deg, rgb(42, 1, 208), rgb(15, 0, 90));
+}
+.navbar-links {
+  transform: translateX(-50%);
+  left: 50%;
+  position: absolute;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+.dropdown-menu > li > a {
+  background-color: white;
+  color: black;
+  text-align: center;
+}
+.dropdown-menu {
+  background-color: white;
+  filter: drop-shadow(0 4px 8px rgba(15, 0, 90, 0.753));
+}
+.dropdown-menu :hover {
+  background-color: rgb(15, 0, 90);
+}
+.nav-link {
+  color: white;
+}
+.profile-dropdown {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img {
+    width: 35px;
+  }
+}
+/* Navbar End */
+/* Index Start */
+.custom-card {
+  border-radius: 15px;
+  padding: 30px;
+  filter: drop-shadow(0 4px 8px rgba(15, 0, 90, 0.585));
+  border: none;
+  width: 18rem;
+  margin: auto auto;
+}
+.custom-card-h1 {
+  margin: 0 auto 40px auto;
+  text-align: center;
+}
+.card-index {
+  background: linear-gradient(120deg, rgb(42, 1, 208), rgb(15, 0, 90));
+}
+.custom-card-body {
+  background-color: rgb(255, 255, 255);
+  border-radius: 20px;
+  margin: 30px 0;
+  filter: drop-shadow(0 4px 8px rgba(255, 255, 255, 0.179));
+  text-align: center;
+  h5 {
+    font-weight: bold;
+  }
+  h4 {
+    font-size: 17px;
+    font-weight: 500;
+  }
+}
+.custom-card-img {
+  border-radius: 15px;
+  filter: drop-shadow(0 4px 8px rgba(255, 255, 255, 0.179));
+}
+.card-hr {
+  border: none; /* Standardlinie entfernen */
+  height: 2px; /* Dicke der Linie */
+  background: linear-gradient(120deg, rgb(42, 1, 208), rgb(15, 0, 90));
+  border-radius: 5px; /* optional -> abgerundet */
+  margin: 10px 0; /* Abstand */
+  opacity: 0.75; /* Bootstrap überschreiben */
+}
+.card-btn {
+  filter: drop-shadow(0 4px 8px rgba(255, 255, 255, 0.179));
+  background-color: white;
+}
+.card-btn:hover {
+  background-color: green;
+  color: white;
+}
+/* Index End */
+/* Footer Start */
+footer {
+  background: linear-gradient(120deg, rgb(42, 1, 208), rgb(15, 0, 90));
+  margin: 0 auto;
+  height: auto;
+  padding: 10px;
+  width: 100%;
+}
+.social-icons > a > i {
+  font-size: 20px;
+}
+.subscribe {
+  background-color: white;
+  color: black;
+  width: 180px;
+}
+.subscribe:hover {
+  background-color: green;
+  color: white;
+}
+.form-control {
+  width: 100%;
+  text-align: center;
+}
+.newsletter-sign-up-box {
+  max-width: 800px;
+}
+.copyright {
+  text-align: center;
+  color: white;
+}
+/* Footer End */
+@media (max-width: 992px) {
+  /* Navbar Start */
+  .navbar-links {
+    transform: none;
+    left: auto;
+    position: static;
+    text-align: center;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  /* Profil-Container auf volle Breite */
+  .navbar-profile {
+    display: flex !important;
+    justify-content: center;
+    margin-top: 15px;
+  }
+
+  /* Profilbild + Toggle vertikal */
+  .profile-dropdown {
+    width: 100%;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center;
+  }
+
+  /* Dropdown-Menü unter dem Profilbild */
+  .profile-dropdown .dropdown-menu {
+    position: static !important; /* WICHTIG */
+    transform: none !important;
+    margin-top: 8px !important;
+    width: 80%; /* Optional, sieht besser aus */
+    text-align: center;
+  }
+  /* Navbar End */
+}

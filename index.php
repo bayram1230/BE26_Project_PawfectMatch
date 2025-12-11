@@ -21,8 +21,7 @@ if ($result && mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
         $image = "img/no-image.png";
         $layout .= "
-            <h1 class='custom-card-h1'>Current list of available pets</h1>
-            <div class='card custom-card card-index'>
+            <div class='card custom-card'>
                 <img src='img/" . htmlspecialchars($row['img']) . "' 
                      class='custom-card-img' 
                      alt='" . htmlspecialchars($row['Name']) . "'>
@@ -58,7 +57,7 @@ if ($result && mysqli_num_rows($result) > 0) {
     <nav class="navbar navbar-dark navbar-expand-lg custom-navbar sticky-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="index.php">
-                <img src="img/logo.png" alt="brand" style="width: 50px; height: 40px">
+                <img src="img/logo-navbar.png" alt="logo" style="width: 60px; height: 40px">
             </a>
             <button class="navbar-toggler" 
                     type="button"
@@ -110,12 +109,12 @@ if ($result && mysqli_num_rows($result) > 0) {
                             aria-labelledby="profileDropdown">
 
                             <?php if (!isset($_SESSION['user']) && !isset($_SESSION['admin'])): ?>
-                                <li><a class="dropdown-item" href="php/register-login/login.php">Login</a></li>
-                                <li><a class="dropdown-item" href="php/register-login/register.php">Sign Up</a></li>
+                                <li><a class="dropdown-item" href="php/login.php/login.php">Login</a></li>
+                                <li><a class="dropdown-item" href="php/login.php/register.php">Sign Up</a></li>
 
                             <?php else: ?>
                                 <li><a class="dropdown-item" href="<?= getProfileLink() ?>">Dashboard</a></li>
-                                <li><a class="dropdown-item" href="php/register-login/logout.php">Logout</a></li>
+                                <li><a class="dropdown-item" href="php/login.php/logout.php">Logout</a></li>
                             <?php endif; ?>
 
                         </ul>
@@ -127,6 +126,10 @@ if ($result && mysqli_num_rows($result) > 0) {
     </nav>
     <!-- Main Content -->
     <div class="container index-container">
+        <div class="logo-wrapper">
+            <img class="index-logo" src="img/logo.png" alt="logo">
+        </div>
+        <h1 class='custom-card-h1'>Current list of available pets</h1>
         <div class="row">
             <?= $layout ?>
         </div>

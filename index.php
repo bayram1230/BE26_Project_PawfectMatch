@@ -99,7 +99,7 @@ if ($result && mysqli_num_rows($result) > 0) {
                     <li class="nav-item dropdown profile-dropdown">
 
                         <img src="img/<?= htmlspecialchars($profilePic) ?>" class="rounded-circle">
-                        <a class="nav-link dropdown-toggle"
+                        <a class="nav-link dropdown-toggle text-light"
                            href="#"
                            id="profileDropdown"
                            role="button"

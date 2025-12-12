@@ -1,8 +1,7 @@
 <?php
-session_start();
 
-require_once "components/db_connect.php";
-require_once "php/functions/get_profile.php";
+require_once __DIR__ . "/../../components/db_connect.php";
+require_once __DIR__ . "/../functions/get_profile.php";
 
 // load profile picture from function
 if (isset($_SESSION['user']) || isset($_SESSION['admin'])) {
@@ -11,35 +10,55 @@ if (isset($_SESSION['user']) || isset($_SESSION['admin'])) {
     $profilePic = "default-users.png";
 }
 
-// DB
-$sql = "SELECT * FROM Animal";
+// Check if ID exists in URL
+if (!isset($_GET['id']) || empty($_GET['id'])) {
+    die("<h3>No ID provided.</h3>");
+}
+
+$id = intval($_GET['id']); // Secure value
+
+// Use correct table name + correct column names based on your SQL dump
+$sql = "SELECT * FROM animal WHERE ID = $id";
 $result = mysqli_query($conn, $sql);
 
 $layout = "";
 
-if ($result && mysqli_num_rows($result) > 0) {
-    while ($row = mysqli_fetch_assoc($result)) {
-        $image = "img/no-image.png";
-        $layout .= "
-            <div class='card custom-card'>
-                <img src='img/" . htmlspecialchars($row['img']) . "' 
-                     class='custom-card-img' 
-                     alt='" . htmlspecialchars($row['Name']) . "'>
-                <div class='card-body custom-card-body'>
-                    <h5 class='card-title'>" . htmlspecialchars($row['Name']) . "</h5>
-                    <hr class='card-hr'>
-                    <h4 class='card-text'>Breed: " . htmlspecialchars($row['Type']) . "</h4>
+if (!$result) {
+    die("Query error: " . mysqli_error($conn));
+}
+
+if (mysqli_num_rows($result) > 0) {
+    $row = mysqli_fetch_assoc($result);
+
+// Build layout
+$layout = "
+    <div class='card details-card text-center'>
+        <div class='card-body details-card-body'>
+            <img src='../../img/default-animals.png'
+                 class='custom-card-img'
+                 alt=\"{$row['Name']}\">
+            <div class='details-right'>
+                <h2 class='card-title text-center'>{$row['Name']}</h2>
+                <div class='description-wrapper'>
+                    <p class='card-text'>{$row['Description']}</p>
                 </div>
-                <div class='d-flex justify-content-center'>
-                    <a href='php/crud/details.php?id={$row['ID']}' class='btn card-btn'>
-                        More Details
-                    </a>
+                <div class='details-info-row'>
+                    <table class='details-table'>
+                        <tr><th>Type:</th><td>{$row['Type']}</td></tr>
+                        <tr><th>Breed:</th><td>{$row['Breed']}</td></tr>
+                        <tr><th>Sex:</th><td>{$row['Sex']}</td></tr>
+                        <tr><th>Age:</th><td>{$row['Age']}</td></tr>
+                        <tr><th>Color:</th><td>{$row['Color']}</td></tr>
+                        <tr><th>Size:</th><td>{$row['Size']}</td></tr>
+                    </table>
+                    <button class='inline-btn'>Take Me Home 🐾</button>
                 </div>
             </div>
-        ";
-    }
+        </div>
+    </div>
+    ";
 } else {
-    $layout = "<h3 class='my-3'>No animals found</h3>";
+    $layout = "<h3>No data found.</h3>";
 }
 ?>
 <!DOCTYPE html>
@@ -47,19 +66,19 @@ if ($result && mysqli_num_rows($result) > 0) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PawfectMatch</title>
+    <title>Exam 4</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-dark navbar-expand-lg custom-navbar sticky-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.php">
-                <img src="img/logo-navbar.png" alt="logo" style="width: 60px; height: 40px">
+            <a class="navbar-brand" href="/index.php">
+                <img src="../../img/logo-navbar.png" alt="logo" style="width: 60px; height: 40px">
             </a>
-            <button class="navbar-toggler" 
+            <button class="navbar-toggler"
                     type="button"
                     data-bs-toggle="collapse"
                     data-bs-target="#navbarNavDarkDropdown"
@@ -71,25 +90,26 @@ if ($result && mysqli_num_rows($result) > 0) {
             <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
                 <ul class="navbar-nav mx-auto navbar-links">
                     <li class="nav-item">
-                        <a class="nav-link active" href="index.php">Home</a>
+                        <a class="nav-link active" href="/index.php">Home</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle active" 
-                           href="#" 
-                           role="button" 
+                        <a class="nav-link dropdown-toggle active"
+                           href="#"
+                           role="button"
                            data-bs-toggle="dropdown">
                             Animals
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark">
                             <li>
-                                <a class="dropdown-item" href="php/crud/create.php">Add new animal</a>
+                                <a class="dropdown-item" href="/php/crud/create.php">
+                                    Add new animal
+                                </a>
                             </li>
                         </ul>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link disabled">About</a>
                     </li>
-
                     <li class="nav-item">
                         <a class="nav-link disabled">Contact us</a>
                     </li>
@@ -97,7 +117,9 @@ if ($result && mysqli_num_rows($result) > 0) {
                 <!-- Profile Dropdown -->
                 <ul class="navbar-nav ms-auto navbar-profile">
                     <li class="nav-item dropdown profile-dropdown">
-                        <img src="img/<?= htmlspecialchars($profilePic) ?>" class="rounded-circle">
+                        <img src="../../img/<?= htmlspecialchars($profilePic) ?>"
+                             class="rounded-circle"
+                             style="width:35px">
                         <a class="nav-link dropdown-toggle text-light"
                            href="#"
                            id="profileDropdown"
@@ -108,12 +130,23 @@ if ($result && mysqli_num_rows($result) > 0) {
                             aria-labelledby="profileDropdown">
 
                             <?php if (!isset($_SESSION['user']) && !isset($_SESSION['admin'])): ?>
-                                <li><a class="dropdown-item" href="php/login/login.php">Login</a></li>
-                                <li><a class="dropdown-item" href="php/login/register.php">Sign Up</a></li>
+
+                                <li>
+                                    <a class="dropdown-item" href="/php/login/login.php">Login</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="/php/login/register.php">Sign Up</a>
+                                </li>
 
                             <?php else: ?>
-                                <li><a class="dropdown-item" href="<?= getProfileLink() ?>">Dashboard</a></li>
-                                <li><a class="dropdown-item" href="php/login/logout.php">Logout</a></li>
+
+                                <li>
+                                    <a class="dropdown-item" href="<?= getProfileLink() ?>">Dashboard</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="/php/login/logout.php">Logout</a>
+                                </li>
+
                             <?php endif; ?>
 
                         </ul>
@@ -123,16 +156,16 @@ if ($result && mysqli_num_rows($result) > 0) {
         </div>
     </nav>
     <!-- Main Content -->
-    <div class="container index-container">
+    <div class="container details-container">
         <div class="logo-wrapper">
-            <img class="index-logo" src="img/logo.png" alt="logo">
+            <img class="index-logo" src="../../img/logo.png" alt="logo">
         </div>
-        <h1 class='custom-card-h1'>Current list of available pets</h1>
+        <h1 class='custom-card-h1'>Details</h1>
         <div class="row">
             <?= $layout ?>
         </div>
     </div>
-    <!-- Footer -->
+        <!-- Footer -->
     <footer class="mt-auto py-4">
         <div class="social-icons text-center mb-3">
             <a href="#"><i class="fab fa-facebook text-white"></i></a>
@@ -145,7 +178,6 @@ if ($result && mysqli_num_rows($result) > 0) {
         <div class="newsletter text-center mb-4">
             <form method="get" 
                   class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-2">
-
                 <label for="newsletter-email" class="form-label text-white mb-0">
                     Sign up for our newsletter
                 </label>

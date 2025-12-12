@@ -3,7 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once "db_connect.php";
+require_once __DIR__ . '/../../components/db_connect.php';
 
 /* Returns avatar of logged-in user (admin or user) */
 function getProfilePicture($conn) {

@@ -1,15 +1,19 @@
 <?php
+require_once "../../components/db_connect.php";
+require_once "../../components/function.php";
+
+
 
 session_start();
 
 
 if (isset($_SESSION["admin"])) {
-    header("Location: dashboard.php");
+    header("Location: /../../dashboard.php");
     exit();
 }
 
 if (isset($_SESSION["user"])) {
-    header("Location: home.php");
+   header("Location: /../../home.php");
     exit();
 }
 
@@ -18,8 +22,7 @@ if (isset($_GET["restricted"]) && $_GET["restricted"] == "true") {
     $pageMessage = "You don't have access to this page";
 }
 
-require_once "components/db_connect.php";
-require_once "components/function.php";
+
 
 $error = false;
 
@@ -58,13 +61,13 @@ if (isset($_POST["login"])) {
             
             if ($row["Role"] == "admin") {
                 $_SESSION["admin"] = $row["Username"]; 
-                header("Location: dashboard.php");
+                header("Location: /../../dashboard.php");
                 exit();
             }
 
             
             $_SESSION["user"] = $row["Username"];
-            header("Location: home.php");
+            header("Location: /../../home.php");
             exit();
 
         } else {

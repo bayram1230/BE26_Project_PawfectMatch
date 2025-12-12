@@ -1,6 +1,6 @@
 <?php
-require_once "components/db_connect.php";
-require_once "components/function.php";
+require_once "../../components/db_connect.php";
+require_once "../../components/function.php";
 
 $error = false;
 

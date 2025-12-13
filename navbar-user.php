@@ -8,7 +8,7 @@ $profilePic = $profilePic ?? "default-users.png";
 
         
         <a class="navbar-brand" href="home.php">
-            <img src="img/logo.png" alt="brand" style="width: 50px; height: 40px">
+            <img src="img/logo-navbar.png" alt="brand" style="width: 50px; height: 40px">
         </a>
 
        

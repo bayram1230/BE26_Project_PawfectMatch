@@ -4,6 +4,15 @@ session_start();
 require_once "components/db_connect.php";
 require_once "components/profile_pic.php";
 
+if (!isset($_SESSION["user"]) && !isset($_SESSION["admin"])) {
+    header("Location: php/login/login.php?restricted=true");
+    exit;
+}
+
+if (isset($_SESSION["admin"])) {
+    header("Location: dashboard.php");
+    exit;
+}
 
 // alle tiere holen
 $sql = "SELECT * FROM animal";

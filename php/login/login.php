@@ -67,7 +67,7 @@ if (isset($_POST["login"])) {
 
             
             $_SESSION["user"] = $row["Username"];
-            header("Location: /../../home.php");
+            header("Location: ../../home.php");
             exit();
 
         } else {

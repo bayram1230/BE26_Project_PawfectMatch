@@ -8,12 +8,12 @@ session_start();
 
 
 if (isset($_SESSION["admin"])) {
-    header("Location: /../../dashboard.php");
+    header("Location: ../../dashboard.php");
     exit();
 }
 
 if (isset($_SESSION["user"])) {
-   header("Location: /../../home.php");
+   header("Location: ../../home.php");
     exit();
 }
 
@@ -61,7 +61,7 @@ if (isset($_POST["login"])) {
             
             if ($row["Role"] == "admin") {
                 $_SESSION["admin"] = $row["Username"]; 
-                header("Location: /../../dashboard.php");
+                header("Location: ../../dashboard.php");
                 exit();
             }
 

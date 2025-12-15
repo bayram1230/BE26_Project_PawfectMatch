@@ -32,10 +32,10 @@ if (isset($_SESSION['user']) || isset($_SESSION['admin'])) {
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <!-- LINKS -->
+       
         <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
 
-            <!-- CENTER LINKS -->
+           
             <ul class="navbar-nav mx-auto navbar-links">
                 <li class="nav-item">
                     <a class="nav-link" href="index.php">Home</a>
@@ -70,7 +70,7 @@ if (isset($_SESSION['user']) || isset($_SESSION['admin'])) {
                 </li>
             </ul>
 
-            <!-- PROFILE DROPDOWN -->
+            
             <ul class="navbar-nav ms-auto navbar-profile">
                 <li class="nav-item dropdown profile-dropdown">
 

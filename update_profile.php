@@ -86,41 +86,121 @@ if (isset($_POST["update"])) {
 <head>
     <meta charset="UTF-8">
     <title>Edit Profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: #f4f6f8;
+        }
+        .profile-card {
+            border-radius: 18px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            background: #9affb4;
+        }
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid #fff;
+        }
+        .profile-btn {
+            border-radius: 8px;
+            font-weight: 600;
+        }
+    </style>
 </head>
-<body>
+
+<body class="body-pic">
 
 <?php include_once "navbar-user.php"; ?>
 
-<div class="container my-5" style="max-width:600px;">
-    <h1>Edit Profile</h1>
+<div class="container my-5">
 
-    <?php if (isset($error)): ?>
-        <div class="alert alert-danger"><?= $error ?></div>
-    <?php endif; ?>
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-8">
 
-    <form method="post" enctype="multipart/form-data">
+            <div class="card profile-card p-4 text-center">
 
-        <div class="mb-3">
-            <label>Full Name</label>
-            <input type="text" class="form-control" name="name" value="<?= $row["Name"] ?>">
+                
+               
+
+                <h3 class="fw-bold mb-3">
+                    Edit Profile
+                </h3>
+
+                <hr class="border border-dark border-1 opacity-100 mb-4">
+
+                <?php if (isset($error)): ?>
+                    <div class="alert alert-danger">
+                        <?= $error ?>
+                    </div>
+                <?php endif; ?>
+
+                
+                <form method="post" enctype="multipart/form-data" class="text-start">
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Full Name</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="name"
+                            value="<?= htmlspecialchars($row["Name"]) ?>"
+                        >
+                    </div>
+                        <br>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Email</label>
+                        <input
+                            type="email"
+                            class="form-control"
+                            name="email"
+                            value="<?= htmlspecialchars($row["Email"]) ?>"
+                        >
+                    </div>
+                    <br>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold">Profile Picture</label>
+                        <input
+                            type="file"
+                            class="form-control"
+                            name="picture"
+                        >
+                    </div>
+                    <br>
+
+                    
+                    <div class="d-flex justify-content-center gap-3">
+                        <button
+                            type="submit"
+                            name="update"
+                            class="btn btn-dark w-25 profile-btn"
+                        >
+                            Update
+                        </button>
+
+                        <a
+                            href="userprofile.php"
+                            class="btn btn-secondary w-25 profile-btn"
+                        >
+                            Cancel
+                        </a>
+                    </div>
+
+                </form>
+
+            </div>
+
         </div>
+    </div>
 
-        <div class="mb-3">
-            <label>Email</label>
-            <input type="email" class="form-control" name="email" value="<?= $row["Email"] ?>">
-        </div>
-
-        <div class="mb-3">
-            <label>Profile Picture</label>
-            <input type="file" class="form-control" name="picture">
-        </div>
-
-        <button type="submit" name="update" class="btn btn-warning">Update</button>
-        <a href="userprofile.php" class="btn btn-secondary">Cancel</a>
-    </form>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

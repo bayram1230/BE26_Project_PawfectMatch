@@ -83,8 +83,11 @@ if (isset($_POST["login"])) {
     <meta charset="UTF-8">
     <title>Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link href="css/style.css" rel="stylesheet">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+      <link href="../../css/style.css" rel="stylesheet">
+
 
     <style>
         body {
@@ -104,14 +107,14 @@ if (isset($_POST["login"])) {
         }
     </style>
 </head>
-<body>
+<body class="body-pic">
 
 <div class="container my-5">
 
    
     <h1 class="text-center mb-4 fw-bold">
         <img 
-            src="../../img/logo-black.png" 
+            src="../../img/logo.png" 
             alt="Pawfect Match Logo"
             style="max-width: 220px; height: auto;"
         >

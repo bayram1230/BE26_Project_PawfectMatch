@@ -13,7 +13,7 @@ if (isset($_SESSION["admin"])) {
 }
 
 if (isset($_SESSION["user"])) {
-   header("Location: ../../home.php");
+   header("Location: ../../index.php");
     exit();
 }
 
@@ -67,7 +67,7 @@ if (isset($_POST["login"])) {
 
             
             $_SESSION["user"] = $row["Username"];
-            header("Location: ../../home.php");
+            header("Location: ../../index.php");
             exit();
 
         } else {

@@ -124,7 +124,7 @@ if (isset($_POST["register"])) {
 
 <div class="container my-5">
 
-    <!-- TITLE -->
+   
     <h1 class="text-center mb-4 fw-bold">
     <img 
         src="../../img/logo-black.png" 

@@ -144,7 +144,7 @@ if ($result && mysqli_num_rows($result) > 0) {
                                 <li><a class="dropdown-item" href="php/login/register.php">Sign Up</a></li>
                             <?php else: ?>
                                 <li><a class="dropdown-item" href="<?= getProfileLink() ?>">Dashboard</a></li>
-                                <li><a class="dropdown-item" href="php/login/logout.php">Logout</a></li>
+                                <li><a class="dropdown-item" href="logout.php">Logout</a></li>
                             <?php endif; ?>
 
                         </ul>

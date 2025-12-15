@@ -77,14 +77,14 @@ if (isset($_POST["apply"])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
       <link href="css/style.css" rel="stylesheet">
 </head>
-<body>
+<body class="body-pic">
 
 <?php 
 include_once "navbar-user.php";
 ?> 
 
 <div class="container my-5" style="max-width: 600px;">
-    <h2 class="mb-4 text-center">Adoption Application</h2>
+    <h2 class="mb-4 text-center text-white">Adoption Application</h2>
 
     <?php if (isset($msg)): ?>
         <div class="alert alert-danger"><?= $msg ?></div>
@@ -92,47 +92,47 @@ include_once "navbar-user.php";
 
     <form method="post">
         <div class="mb-3">
-            <label class="form-label">Living situation *</label>
+            <label class="form-label text-white">Living situation *</label>
             <textarea name="living" class="form-control" rows="2"></textarea>
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Previous pet ownership experience *</label>
+            <label class="form-label text-white">Previous pet ownership experience *</label>
             <textarea name="experience" class="form-control" rows="2"></textarea>
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Reason for adopting *</label>
+            <label class="form-label text-white">Reason for adopting *</label>
             <textarea name="reason" class="form-control" rows="2"></textarea>
             
         <div class="mb-3">
 
-    <label class="form-label">Daily routine & time availability</label>
+    <label class="form-label text-white">Daily routine & time availability</label>
     <textarea name="routine" class="form-control" rows="2"></textarea>
     </div>
 
     <div class="mb-3">
-        <label class="form-label">Household & allergies</label>
+        <label class="form-label text-white">Household & allergies</label>
         <textarea name="allergies" class="form-control" rows="2"></textarea>
     </div>
 
     <div class="mb-3">
-        <label class="form-label">Financial readiness</label>
+        <label class="form-label text-white">Financial readiness</label>
         <textarea name="financial" class="form-control" rows="2"></textarea>
     </div>
 
     <div class="mb-3">
-        <label class="form-label">Home environment</label>
+        <label class="form-label text-white">Home environment</label>
         <textarea name="environment" class="form-control" rows="2"></textarea>
     </div>
 
     <div class="mb-3">
-        <label class="form-label">Animal preferences</label>
+        <label class="form-label text-white">Animal preferences</label>
         <textarea name="preferences" class="form-control" rows="2"></textarea>
     </div>
 
     <div class="mb-3">
-        <label class="form-label">Additional notes</label>
+        <label class="form-label text-white">Additional notes</label>
         <textarea name="notes" class="form-control" rows="2"></textarea>
     </div>
 

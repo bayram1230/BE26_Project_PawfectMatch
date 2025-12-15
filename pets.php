@@ -52,40 +52,46 @@ if (mysqli_num_rows($result) > 0) {
     $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
     foreach ($rows as $row) {
-        $layout .= "
-      <div class='col mb-4 mt-2'>
+      $layout .= "
+<div class='col'>
+    <div class='card paw-card paw-card--index'>
+        <div class='paw-card-inner'>
+            <div class='paw-card-content'>
 
-    <div class='card custom-card card-index'>
+                <img
+                    src='img/" . htmlspecialchars($row['img']) . "'
+                    class='paw-card-img'
+                    alt='" . htmlspecialchars($row['Name']) . "'
+                    onerror=\"this.src='img/default-animals.png'\"
+                >
 
-        <img src='img/" . htmlspecialchars($row['img']) . "' 
-        
-             class='custom-card-img'
-             alt='" . htmlspecialchars($row['Name']) . "'>
+                <div class='paw-card-title-wrapper'>
+                    <h5 class='paw-card-title'>" . htmlspecialchars($row['Name']) . "</h5>
+                    <hr class='index-card-hr'>
+                    <p class='paw-card-meta'>
+                        Type: " . htmlspecialchars($row['Type']) . "<br>
+                        Breed: " . htmlspecialchars($row['Breed']) . "<br>
+                        Age: " . htmlspecialchars($row['Age']) . "
+                    </p>
+                </div>
 
-        <div class='card-body custom-card-body'>
+                <div class='d-flex flex-column gap-2'>
+                    <a href='pet_details.php?id=" . $row['ID'] . "' class='btn paw-card-btn'>
+                        🐾 More Details 🐾
+                    </a>
+                    <a href='apply.php?id=" . $row['ID'] . "' class='btn btn-success'>
+                        Take Me Home
+                    </a>
+                </div>
 
-            <h5 class='card-title'>" . htmlspecialchars($row['Name']) . "</h5>
-
-            <hr class='card-hr'>
-
-            <p class='card-text'>Type: " . htmlspecialchars($row['Type']) . "</p>
-            <p class='card-text'>Breed: " . htmlspecialchars($row['Breed']) . "</p>
-            <p class='card-text'>Age: " . htmlspecialchars($row['Age']) . "</p>
-
+            </div>
         </div>
-
-        <div class='d-flex justify-content-center gap-2 mb-3'>
-            <a href='pet_details.php?id={$row['ID']}' class='btn card-btn'>More Details</a>
-            <a href='apply.php?id={$row['ID']}' class='btn btn-success'>Take Me Home</a>
-        </div>
-
     </div>
-
 </div>
-        ";
+";
     }
 } else {
-    $layout = "<h3>No pets found matching your filters.</h3>";
+    $layout = "<h3 class='text-white'>No pets found matching your filters.</h3>";
 }
 
 ?>
@@ -101,7 +107,7 @@ if (mysqli_num_rows($result) > 0) {
       <link href="css/style.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="body-pic">
 
 
 <?php
@@ -112,12 +118,12 @@ include_once "navbar-user.php";
 
 <div class="container my-4">
 
-    <h2 class="mb-4">Search Pets</h2>
+    <h2 class="mb-4 text-white">Search Pets</h2>
 
     <form method="GET" class="row g-3">
 
         <div class="col-md-3">
-            <label>Type</label>
+            <label class="text-white">Type</label>
             <select name="type" class="form-control">
                 <option value="">All</option>
                 <option value="Dog" <?= $typeFilter == "Dog" ? "selected" : "" ?>>Dog</option>
@@ -127,13 +133,13 @@ include_once "navbar-user.php";
         </div>
 
         <div class="col-md-3">
-            <label>Max Age</label>
+            <label class="text-white">Max Age</label>
             <input type="number" name="age" class="form-control" min="0" value="<?= $ageFilter ?>">
 
         </div>
 
         <div class="col-md-3">
-            <label>Breed</label>
+            <label  class="text-white">Breed</label>
             <input type="text" name="breed" class="form-control" value="<?= $breedFilter ?>">
         </div>
 

@@ -1,6 +1,8 @@
 <?php
-require_once "components/db_connect.php";
-require_once "components/function.php";
+require_once "../../components/db_connect.php";
+require_once "../../components/function.php";
+require_once "../../components/fileupload.php";
+
 
 $error = false;
 
@@ -10,6 +12,9 @@ if (isset($_POST["register"])) {
     $name     = cleanInput($_POST["name"]);
     $email    = cleanInput($_POST["email"]);
     $password = cleanInput($_POST["password"]);
+
+    $picture = fileUpload($_FILES["picture"]);
+    $img = $picture[0];
 
    
     if (empty($username)) {
@@ -30,6 +35,7 @@ if (isset($_POST["register"])) {
             $usernameError = "This username is already taken";
         }
     }
+
 
    
     if (empty($name)) {
@@ -74,8 +80,8 @@ if (isset($_POST["register"])) {
         $password = hash("sha256", $password);
 
         $sql = "
-            INSERT INTO Users (Username, Password, Name, Email, Role)
-            VALUES ('$username', '$password', '$name', '$email', 'user')
+            INSERT INTO Users (Username, Password, Name, Email, Role, Img)
+            VALUES ('$username', '$password', '$name', '$email', 'user', '{$img}')
         ";
 
         if (mysqli_query($conn, $sql)) {
@@ -100,7 +106,7 @@ if (isset($_POST["register"])) {
     <h1>User Registration</h1>
     <?= $success ?? "" ?>
 
-    <form method='post'>
+    <form method="post" enctype="multipart/form-data">
 
         <div class='mb-3'>
             <label>Username *</label>
@@ -126,11 +132,16 @@ if (isset($_POST["register"])) {
             <p class='text-danger'><?= $passwordError ?? "" ?></p>
         </div>
 
+        <div class="mb-3">
+        <label>Profile Picture</label>
+        <input type="file" class="form-control" name="picture">
+        </div>
+
         <button type='submit' name='register' class='btn btn-primary'>Register</button>
         <span>Already have an account? <a href='login.php'>Login here</a></span>
 
     </form>
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

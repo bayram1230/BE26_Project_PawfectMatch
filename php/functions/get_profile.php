@@ -15,7 +15,7 @@ function getProfilePicture($conn) {
     if (!$id) return "default-users.png";
 
     // DB 
-    $sql = "SELECT Img FROM users WHERE ID = $id";
+    $sql = "SELECT Img FROM users WHERE Username = '$id'";
     $result = mysqli_query($conn, $sql);
     $row = mysqli_fetch_assoc($result);
 

@@ -1,15 +1,28 @@
 <?php
-session_start();
+session_start(); // 👈 IMMER ALS ERSTES
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 require_once "components/db_connect.php";
 require_once "php/functions/get_profile.php";
 
-/* Profile picture */
-if (isset($_SESSION['user']) || isset($_SESSION['admin'])) {
+/* Rolle (guest | user | admin | shelter) */
+$role = $_SESSION['role'] ?? 'guest';
+
+/* Profilbild bestimmen */
+if (isset($_SESSION['username'])) {
     $profilePic = getProfilePicture($conn);
 } else {
     $profilePic = "default-users.png";
 }
+
+
+/* Navbar laden (nutzt $role & $profilePic) */
+require_once "components/navbar.php";
+
+
 
 /* DB */
 $sql = "SELECT * FROM Animal";
@@ -76,6 +89,7 @@ if ($result && mysqli_num_rows($result) > 0) {
     <link href="css/style.css" rel="stylesheet">
 </head>
 <body class="body-pic">
+<<<<<<< HEAD
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg custom-navbar sticky-top">
         <div class="container-fluid">
@@ -153,6 +167,8 @@ if ($result && mysqli_num_rows($result) > 0) {
             </div>
         </div>
     </nav>
+=======
+>>>>>>> f7d6e40fcb13d1a3bb2b37f39b791d4fe18f0941
     <!-- HERO -->
     <header class="hero-section">
         <video id="heroVideo" muted playsinline preload="auto">

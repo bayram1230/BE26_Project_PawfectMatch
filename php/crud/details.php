@@ -41,15 +41,16 @@ if (mysqli_num_rows($result) === 1) {
     $row = mysqli_fetch_assoc($result);
 
     /* IMAGE handling */
-    if (!empty($row['img'])) {
-        if (strpos($row['img'], 'http') === 0) {
-            $imgPath = $row['img'];
-        } else {
-            $imgPath = "../../img/" . $row['img'];
-        }
+    if (!empty($row['ImageUrl'])) {
+    if (strpos($row['ImageUrl'], 'http') === 0) {
+        $imgPath = $row['ImageUrl'];              // externe URL
     } else {
-        $imgPath = "../../img/default-animals.png";
+        $imgPath = "../../img/" . $row['ImageUrl']; // lokale Datei
     }
+} else {
+    $imgPath = "../../img/default-animals.png";
+}
+
     $buttonHtml = '';
 
 if (isset($_SESSION['user']) || isset($_SESSION['admin'])) {

@@ -33,15 +33,16 @@ $layout = "";
 if ($result && mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
 
-        if (!empty($row['img'])) {
-            if (strpos($row['img'], 'http') === 0) {
-                $imgPath = $row['img'];
-            } else {
-                $imgPath = "img/" . $row['img'];
-            }
-        } else {
-            $imgPath = "img/default-animals.png";
-        }
+        if (!empty($row['ImageUrl'])) {
+    if (strpos($row['ImageUrl'], 'http') === 0) {
+        $imgPath = $row['ImageUrl'];           // externe URL
+    } else {
+        $imgPath = "img/" . $row['ImageUrl'];  // lokale Datei
+    }
+} else {
+    $imgPath = "img/default-animals.png";
+}
+
 
         $layout .= "
         <div class='col'>

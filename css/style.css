@@ -467,22 +467,30 @@
 }
 .add-new-pet-btn {
   background: linear-gradient(135deg, #a8ff78, #78ffd6);
-  color: rgb(15, 0, 90);
+  color: #0b5ed7;
   text-shadow: 0.3px 0.3px 0.5px rgb(15, 0, 90);
   border: none;
+  padding: 8px 12px 11px 12px;
+  font-size: 20px;
+  font-weight: 600;
 }
 .add-new-pet-btn:hover {
-  transform: scale(1.05);
   background: #ffe27a;
-  color: rgb(15, 0, 90);
+  color: #0b5ed7;
 }
 .operations-btn {
-  background: linear-gradient(120deg, rgb(42, 1, 208), rgb(15, 0, 90));
-  color: white;
+  background: linear-gradient(90deg, #78ffd6, #a8ff78);
+  color: #0b5ed7;
   border: none;
+  font-weight: bold;
+  max-width: 180px;
+  width: 100%;
+  font-size: 20px;
 }
 .operations-btn:hover {
-  color: white;
+  transform: scale(1.05);
+  color: #0b5ed7;
+  border: none;
 }
 .update-btn {
   background: linear-gradient(120deg, rgb(42, 1, 208), rgba(15, 0, 90, 0.714));
@@ -504,6 +512,105 @@
   transform: scale(1.05);
 }
 /* Admin Dashboard End */
+/* User Dashboard Start */
+/* =========================
+   DASHBOARD TOP BAR
+   ========================= */
+
+.dashboard-topbar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: auto;
+  padding-top: 80px;
+}
+
+.dashboard-topbar h1 {
+  justify-self: start;
+}
+
+.dashboard-logo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.dashboard-logo img {
+  max-height: 400px;
+  filter: drop-shadow(1px 2px 1px rgba(70, 70, 70, 0.5));
+}
+
+.dashboard-topbar .operations-btn {
+  justify-self: end;
+}
+
+/* =========================
+   WELCOME SECTION
+   ========================= */
+
+.dashboard-welcome-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.dashboard-content {
+  max-width: 800px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background: linear-gradient(90deg, #78ffd6, #a8ff78);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.dashboard-title {
+  font-size: 2.4rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #0b5ed7;
+}
+
+.dashboard-title span {
+  color: #2f855a; /* optional accent */
+}
+
+.dashboard-subtitle {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 2rem;
+}
+.user-menu-btn {
+  background: linear-gradient(90deg, #78ffd6, #a8ff78);
+  color: #0b5ed7;
+  border: none;
+  font-weight: bold;
+  font-size: 48px;
+  border-radius: 14px;
+  width: 400px;
+  margin: 30px 0 65px 0;
+}
+.user-menu-btn:hover {
+  transform: scale(1.05);
+  color: #0b5ed7;
+  border: none;
+}
+/* Info Box */
+.dashboard-info-box {
+  background: #f5faf7;
+  border-left: 6px solid #2f855a;
+  padding: 1.5rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  color: #333;
+}
+
+.dashboard-info-box p {
+  margin: 0;
+  line-height: 1.6;
+}
+/* User Dashboard End */
 /* Footer Start */
 footer {
   background-image: url('../img/body2.png'),
@@ -609,6 +716,68 @@ footer {
     padding: 35px;
   }
   /* Details End */
+  /* Dashboard Start */
+  /* -----USER----- */
+  .dashboard-topbar {
+    position: static;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 40px;
+    gap: 0;
+  }
+
+  /* LOGO */
+  .dashboard-logo {
+    position: static;
+    transform: none;
+    background: linear-gradient(135deg, #a8ff78, #78ffd6);
+    width: 100%;
+    border-radius: 14px;
+    margin: 10px auto;
+    text-align: center;
+  }
+
+  .dashboard-logo img {
+    max-height: 140px; /* groß, aber kontrolliert */
+    margin: 0 auto;
+  }
+
+  /* TITLE */
+  .dashboard-topbar h1 {
+    text-align: center;
+    font-size: 1.6rem;
+    margin: 0;
+  }
+
+  /* MENU BUTTON */
+  .dashboard-topbar .operations-btn {
+    width: 100%;
+    max-width: 280px;
+    font-size: 1.2rem;
+    padding: 12px 0;
+  }
+
+  /* WELCOME BOX */
+  .dashboard-content {
+    margin: 1.5rem 1rem;
+    padding: 1.5rem;
+  }
+
+  .dashboard-title {
+    font-size: 1.8rem;
+  }
+
+  .dashboard-subtitle {
+    font-size: 1rem;
+  }
+
+  /* USER MENU BUTTON (falls verwendet) */
+  .user-menu-btn {
+    width: 100%;
+    font-size: 1.5rem;
+    margin: 0;
+  }
+  /* Dashboard End */
 }
 @media (max-width: 768px) {
   /* Navbar Start */

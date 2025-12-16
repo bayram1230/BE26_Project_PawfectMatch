@@ -1,37 +1,28 @@
 <?php
-require_once "../../components/db_connect.php";
-require_once "../../components/function.php";
-
-
-
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 session_start();
 
+require_once "../../components/db_connect.php";
+require_once "../../components/function.php";
+require_once "../functions/get_profile.php";
 
-if (isset($_SESSION["admin"])) {
-    header("Location: ../../dashboard.php");
-    exit();
+
+// Schon eingeloggt?
+if (isset($_SESSION['username'], $_SESSION['role'])) {
+    header("Location: " . getProfileLink());
+    exit;
 }
-
-if (isset($_SESSION["user"])) {
-   header("Location: ../../home.php");
-    exit();
-}
-
-
-if (isset($_GET["restricted"]) && $_GET["restricted"] == "true") {
-    $pageMessage = "You don't have access to this page";
-}
-
-
 
 $error = false;
 
-if (isset($_POST["login"])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
 
     $email = cleanInput($_POST["email"]);
     $password = cleanInput($_POST["password"]);
 
-   
     if (empty($email)) {
         $error = true;
         $emailError = "Email is required";
@@ -40,7 +31,6 @@ if (isset($_POST["login"])) {
         $emailError = "Invalid email format";
     }
 
-    
     if (empty($password)) {
         $error = true;
         $passwordError = "Password is required";
@@ -50,33 +40,32 @@ if (isset($_POST["login"])) {
 
         $password = hash("sha256", $password);
 
-        
-        $sql = "SELECT * FROM Users WHERE Email = '$email' AND Password = '$password'";
-        $result = mysqli_query($conn, $sql);
+        $sql = "SELECT Username, Role FROM users WHERE Email = ? AND Password = ?";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "ss", $email, $password);
+        mysqli_stmt_execute($stmt);
 
-        if (mysqli_num_rows($result) == 1) {
+        $result = mysqli_stmt_get_result($stmt);
+
+        if (mysqli_num_rows($result) === 1) {
 
             $row = mysqli_fetch_assoc($result);
 
-            
-            if ($row["Role"] == "admin") {
-                $_SESSION["admin"] = $row["Username"]; 
-                header("Location: ../../dashboard.php");
-                exit();
-            }
+            // 🔑 NEUE Session-Logik
+            $_SESSION['username'] = $row['Username'];
+            $_SESSION['role'] = $row['Role'];
 
-            
-            $_SESSION["user"] = $row["Username"];
-            header("Location: ../../home.php");
-            exit();
+            // Weiterleitung je nach Rolle
+            header("Location: " . getProfileLink());
+            exit;
 
         } else {
             $pageMessage = "Your email or password is incorrect";
         }
     }
 }
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -92,21 +81,23 @@ if (isset($_POST["login"])) {
 
     <p class="text-danger"><?= $pageMessage ?? "" ?></p>
 
-    <form method="post">
+    <form method="post" action="login.php">
+
 
         <div class="mb-3">
             <label>Email address</label>
-            <input type="email" class="form-control" name="email">
+            <input type="email" class="form-control" name="email" required>
             <p class="text-danger"><?= $emailError ?? "" ?></p>
         </div>
 
         <div class="mb-3">
             <label>Password</label>
-            <input type="password" class="form-control" name="password">
+            <input type="password" class="form-control" name="password" required>
             <p class="text-danger"><?= $passwordError ?? "" ?></p>
         </div>
 
-        <button type="submit" class="btn btn-primary" name="login">Login!</button>
+        <input type="submit" name="login" value="Login!" class="btn btn-primary">
+
         <span><a href="register.php">Create an account</a></span>
 
     </form>

@@ -10,22 +10,6 @@ require_once __DIR__ . '/../../components/db_connect.php';
  */
 function getProfilePicture($conn) {
 
-<<<<<<< HEAD
-    // Get ID of admin or user
-    $id = $_SESSION['admin'] ?? $_SESSION['user'] ?? null;
-
-    // Guest → Default avatar
-    if (!$id) return "default-users.png";
-
-    // DB 
-    $sql = "SELECT Img FROM users WHERE Username = '$id'";
-    $result = mysqli_query($conn, $sql);
-    $row = mysqli_fetch_assoc($result);
-
-    // If User has own img → take it
-    if (!empty($row['Img'])) {
-        return $row['Img'];
-=======
     // Not logged in → default avatar
     if (!isset($_SESSION['username'])) {
         return "default-users.png";
@@ -50,7 +34,6 @@ function getProfilePicture($conn) {
         return (!empty($row['Img']))
             ? $row['Img']
             : "default-users.png";
->>>>>>> f7d6e40fcb13d1a3bb2b37f39b791d4fe18f0941
     }
 
     return "default-users.png";
@@ -64,18 +47,21 @@ define("BASE_URL", "http://localhost:8000/");
 
 
 /**
- * Returns dashboard link based on role
+ *  Redirect link based on role
  */
-function getProfileLink() {
-
-    // Guest → login
+function getProfileLink()
+{
     if (!isset($_SESSION['username'], $_SESSION['role'])) {
         return BASE_URL . "php/login/login.php";
     }
 
-    return match ($_SESSION['role']) {
-        'admin'   => BASE_URL . "php/admin/admin_dashboard.php",
-        'shelter' => BASE_URL . "php/shelter/shelter_dashboard.php",
-        default   => BASE_URL . "php/user/user_dashboard.php",
-    };
+    if ($_SESSION['role'] === 'admin') {
+        return BASE_URL . "php/admin/admin_dashboard.php";
+    }
+
+    if ($_SESSION['role'] === 'shelter') {
+        return BASE_URL . "php/shelter/shelter_dashboard.php";
+    }
+
+    return BASE_URL . "php/user/user_dashboard.php";
 }

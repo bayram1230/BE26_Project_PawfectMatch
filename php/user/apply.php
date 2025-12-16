@@ -1,14 +1,15 @@
 <?php
 session_start();
-require_once "components/db_connect.php";
-require_once "components/profile_pic.php";
+require_once "../../components/db_connect.php";
+require_once "../functions/get_profile.php";
 
 
 
-if (!isset($_SESSION["user"])) {
-    header("Location:  php/login/login.php?restricted=true");
+if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'user') {
+    header("Location: ../login/login.php?restricted=true");
     exit;
 }
+
 
 
 if (!isset($_GET["id"])) {
@@ -17,7 +18,7 @@ if (!isset($_GET["id"])) {
 }
 
 $animalId = $_GET["id"];
-$username = $_SESSION["user"];
+$username = $_SESSION['username'];
 $error = false;
 
 // wenn formular abgeschickt wird
@@ -75,13 +76,11 @@ if (isset($_POST["apply"])) {
     <title>Apply for Adoption</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-      <link href="css/style.css" rel="stylesheet">
+      <link href="../../css/style.css" rel="stylesheet">
 </head>
 <body class="body-pic">
 
-<?php 
-include_once "navbar-user.php";
-?> 
+<?php require_once "../../components/navbar.php"; ?>
 
 <div class="container my-5" style="max-width: 600px;">
     <h2 class="mb-4 text-center text-white">Adoption Application</h2>

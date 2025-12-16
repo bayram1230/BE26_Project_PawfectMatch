@@ -1,29 +1,25 @@
 <?php
 session_start();
-
-require_once "components/db_connect.php";
-require_once "components/profile_pic.php";
-
+require_once "../../components/db_connect.php";
+require_once "../functions/get_profile.php";
 
 
-if (!isset($_SESSION["user"]) && !isset($_SESSION["admin"])) {
-    header("Location: php/login/login.php?restricted=true");
+/* nur User darf rein */
+if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'user') {  
+    header("Location: ../login/login.php?restricted=true");
     exit;
 }
 
+$username = $_SESSION['username'];
 
-if (isset($_SESSION["admin"])) {
-    header("Location: dashboard.php");
-    exit;
-}
-
-$username = $_SESSION["user"];
-
-$sql = "SELECT * FROM Users WHERE Username = '$username'";
-$result = mysqli_query($conn, $sql);
+$sql = "SELECT * FROM Users WHERE Username = ?";
+$stmt = mysqli_prepare($conn, $sql);
+mysqli_stmt_bind_param($stmt, "s", $username);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
 $row = mysqli_fetch_assoc($result);
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,7 +28,8 @@ $row = mysqli_fetch_assoc($result);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
+
 
     <style>
         body {
@@ -59,7 +56,8 @@ $row = mysqli_fetch_assoc($result);
 
 <body class="body-pic">
 
-<?php include_once "navbar-user.php"; ?>
+<?php require_once "../../components/navbar.php"; ?>
+
 
 <div class="container my-5">
 
@@ -71,11 +69,10 @@ $row = mysqli_fetch_assoc($result);
                 
                 <div class="mb-3 mt-4">
                     <img
-                        src="img/<?= htmlspecialchars($row["Img"]) ?>"
-                        alt="profile picture"
-                        class="profile-img"
-                        onerror="this.src='img/default-users.png'"
-                    >
+                src="../../img/<?= htmlspecialchars($row['Img'] ?? 'default-users.png') ?>"
+                class="profile-img"
+                onerror="this.src='../../img/default-users.png'"
+                >
                 </div>
 
                 

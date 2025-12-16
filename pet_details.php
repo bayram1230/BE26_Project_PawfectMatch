@@ -1,11 +1,15 @@
 <?php
 session_start();
 require_once "components/db_connect.php";
-require_once "components/profile_pic.php";
+require_once "php/functions/get_profile.php";
+require_once "php/functions/user_restriction.php";
+
+requireUser();
 
 
 
-if (!isset($_SESSION["user"])) {
+
+if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'user') {
     header("Location: php/login/login.php?restricted=true");
     exit;
 }
@@ -46,7 +50,7 @@ include_once "navbar-user.php";
     <div class="card details-card text-center">
         <div class="card-body details-card-body">
 
-            <img src="img/<?= htmlspecialchars($row['img']) ?>"
+            <img src="img/<?= htmlspecialchars($row['ImageUrl']) ?>"
                  class="custom-card-img"
                  alt="<?= htmlspecialchars($row['Name']) ?>">
 
@@ -67,7 +71,7 @@ include_once "navbar-user.php";
                 </table>
 
                
-                <a href="apply.php?id=<?= $row['ID'] ?>" class="btn btn-success mt-3">
+                <a href="php/user/apply.php?id=<?= $row['ID'] ?>" class="btn btn-success mt-3">
                     Take Me Home 🐾
                 </a>
                 <a href="pets.php" class="btn btn-success mt-3 ">

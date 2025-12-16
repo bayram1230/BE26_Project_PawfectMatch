@@ -42,8 +42,14 @@ function getProfilePicture($conn) {
 /**
  * Base URL of the project (IMPORTANT!)
  */
-define("BASE_URL", "http://localhost:8000/");
+$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https" : "http";
+$host = $_SERVER['HTTP_HOST'];
 
+// Projekt-Ordner automatisch erkennen
+$scriptDir = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME']));
+$projectRoot = explode('/php/', $scriptDir)[0];
+
+define("BASE_URL", $protocol . "://" . $host . $projectRoot . "/");
 
 
 /**

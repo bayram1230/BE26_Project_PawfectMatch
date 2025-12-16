@@ -15,21 +15,6 @@ if (isset($_SESSION['username'], $_SESSION['role'])) {
     exit;
 }
 
-<<<<<<< HEAD
-if (isset($_SESSION["user"])) {
-   header("Location: ../../index.php");
-    exit();
-}
-
-
-if (isset($_GET["restricted"]) && $_GET["restricted"] == "true") {
-    $pageMessage = "You don't have access to this page";
-}
-
-
-
-=======
->>>>>>> f7d6e40fcb13d1a3bb2b37f39b791d4fe18f0941
 $error = false;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -70,16 +55,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['username'] = $row['Username'];
             $_SESSION['role'] = $row['Role'];
 
-<<<<<<< HEAD
-            
-            $_SESSION["user"] = $row["Username"];
-            header("Location: ../../index.php");
-            exit();
-=======
             // Weiterleitung je nach Rolle
             header("Location: " . getProfileLink());
             exit;
->>>>>>> f7d6e40fcb13d1a3bb2b37f39b791d4fe18f0941
 
         } else {
             $pageMessage = "Your email or password is incorrect";
@@ -131,7 +109,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         >
     </h1>
 
-<<<<<<< HEAD
     <div class="row justify-content-center">
         <div class="col-md-6 col-lg-5">
 
@@ -173,28 +150,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         </div>
     </div>
-=======
-    <form method="post" action="login.php">
-
-
-        <div class="mb-3">
-            <label>Email address</label>
-            <input type="email" class="form-control" name="email" required>
-            <p class="text-danger"><?= $emailError ?? "" ?></p>
-        </div>
-
-        <div class="mb-3">
-            <label>Password</label>
-            <input type="password" class="form-control" name="password" required>
-            <p class="text-danger"><?= $passwordError ?? "" ?></p>
-        </div>
-
-        <input type="submit" name="login" value="Login!" class="btn btn-primary">
-
-        <span><a href="register.php">Create an account</a></span>
-
-    </form>
->>>>>>> f7d6e40fcb13d1a3bb2b37f39b791d4fe18f0941
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>

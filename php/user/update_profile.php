@@ -1,24 +1,20 @@
 <?php
 session_start();
 
-require_once "components/db_connect.php";
-require_once "components/function.php";
-require_once "components/fileupload.php";
-require_once "components/profile_pic.php";
+require_once "../../components/db_connect.php";
+require_once "../../components/function.php";
+require_once "../../components/fileupload.php";
+require_once "../functions/get_profile.php";
 
 
 
-if (!isset($_SESSION["user"]) && !isset($_SESSION["admin"])) {
- header("Location: php/login/login.php?restricted=true");
- exit;
-}
 
-if (!isset($_SESSION["user"])) {
-    header("Location: php/login/login.php?restricted=true");
+if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'user') {
+    header("Location: ../login/login.php?restricted=true");
     exit;
 }
 
-$username = $_SESSION["user"];
+$username = $_SESSION['username'];
 
 
 $sql = "SELECT * FROM Users WHERE Username = '$username'";
@@ -89,7 +85,8 @@ if (isset($_POST["update"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../css/style.css">
+
 
     <style>
         body {
@@ -116,7 +113,7 @@ if (isset($_POST["update"])) {
 
 <body class="body-pic">
 
-<?php include_once "navbar-user.php"; ?>
+<?php require_once "../../components/navbar.php"; ?>
 
 <div class="container my-5">
 

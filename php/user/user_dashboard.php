@@ -14,7 +14,8 @@ if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'user') {
 $profilePic = getProfilePicture($conn);
 
 /* Username (VORHER, nicht im String!) */
-$userName = htmlspecialchars($_SESSION['user']['Name'] ?? 'User', ENT_QUOTES, 'UTF-8');
+$userName = htmlspecialchars($_SESSION['username'], ENT_QUOTES, 'UTF-8');
+
 
 /* Load pets (READ ONLY) */
 $sql = "SELECT * FROM animal";
@@ -106,25 +107,17 @@ $layout = "
             <li><a href="user_dashboard.php" class="custom-nav-link">Dashboard</a></li>
             <hr>
 
-            <li class="dropdown">
-                <a class="custom-nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#">
-                    Pets
-                </a>
-                <ul class="dropdown-menu dropdown-menu-dark">
-                    <li><a href="../../pets.php" class="dropdown-item">Search Pets</a></li>
-                    <li><a href="user_saved_pets.php" class="dropdown-item">Saved Pets</a></li>
-                </ul>
-            </li>
+           <li><a href="../../pets.php" class="custom-nav-link">Search Pets</a></li>
 
             <hr>
 
-            <li><a href="user_applications.php" class="custom-nav-link">My Applications</a></li>
+            <li><a href="my_applications.php" class="custom-nav-link">My Applications</a></li>
             <hr>
 
             <li><a href="user_messages.php" class="custom-nav-link">Messages</a></li>
             <hr>
 
-            <li><a href="user_profile.php" class="custom-nav-link">Profile / Settings</a></li>
+            <li><a href="userprofile.php" class="custom-nav-link">Profile / Settings</a></li>
 
         </ul>
     </div>

@@ -1,100 +1,77 @@
 <?php
 session_start();
 
-require_once "components/db_connect.php";
-require_once "components/profile_pic.php";
+require_once __DIR__ . "/components/db_connect.php";
+require_once __DIR__ . "/php/functions/get_profile.php";
+require_once __DIR__ . "/php/functions/user_restriction.php";
 
+requireUser(); // nur User darf rein
 
-
-if (!isset($_SESSION["user"]) && !isset($_SESSION["admin"])) {
-    header("Location: php/login/login.php?restricted=true");
-    exit;
-}
-
-if (isset($_SESSION["admin"])) {
-    header("Location: dashboard.php");
-    exit;
-}
-
-
-$username = $_SESSION["user"];
-
-
-
-$typeFilter = $_GET["type"] ?? "";
-$ageFilter  = $_GET["age"] ?? "";
+$typeFilter  = $_GET["type"]  ?? "";
+$ageFilter   = $_GET["age"]   ?? "";
 $breedFilter = $_GET["breed"] ?? "";
 
+$sql = "SELECT * FROM animal WHERE 1=1";
 
-$sql = "SELECT * FROM Animal WHERE 1=1 ";
-
-// filter type
-if (!empty($typeFilter)) {
+if ($typeFilter !== "") {
     $sql .= " AND Type = '$typeFilter'";
 }
-
-// filter age
-if (!empty($ageFilter)) {
+if ($ageFilter !== "") {
     $sql .= " AND Age <= $ageFilter";
 }
-
-// filter breed
-if (!empty($breedFilter)) {
+if ($breedFilter !== "") {
     $sql .= " AND Breed LIKE '%$breedFilter%'";
 }
 
 $result = mysqli_query($conn, $sql);
 
-
 $layout = "";
 
 if (mysqli_num_rows($result) > 0) {
-    $rows = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    while ($row = mysqli_fetch_assoc($result)) {
 
-    foreach ($rows as $row) {
-      $layout .= "
-<div class='col'>
-    <div class='card paw-card paw-card--index'>
-        <div class='paw-card-inner'>
-            <div class='paw-card-content'>
+        $layout .= "
+        <div class='col'>
+            <div class='card paw-card paw-card--index'>
+                <div class='paw-card-inner'>
+                    <div class='paw-card-content'>
 
-                <img
-                    src='img/" . htmlspecialchars($row['img']) . "'
-                    class='paw-card-img'
-                    alt='" . htmlspecialchars($row['Name']) . "'
-                    onerror=\"this.src='img/default-animals.png'\"
-                >
+                        <img
+                            src='" . htmlspecialchars($row['ImageUrl']) . "'
+                            class='paw-card-img'
+                            alt='" . htmlspecialchars($row['Name']) . "'
+                            onerror=\"this.src='img/default-animals.png'\"
+                        >
 
-                <div class='paw-card-title-wrapper'>
-                    <h5 class='paw-card-title'>" . htmlspecialchars($row['Name']) . "</h5>
-                    <hr class='index-card-hr'>
-                    <p class='paw-card-meta'>
-                        Type: " . htmlspecialchars($row['Type']) . "<br>
-                        Breed: " . htmlspecialchars($row['Breed']) . "<br>
-                        Age: " . htmlspecialchars($row['Age']) . "
-                    </p>
+                        <div class='paw-card-title-wrapper'>
+                            <h5 class='paw-card-title'>" . htmlspecialchars($row['Name']) . "</h5>
+                            <hr class='index-card-hr'>
+                            <p class='paw-card-meta'>
+                                Type: " . htmlspecialchars($row['Type']) . "<br>
+                                Breed: " . htmlspecialchars($row['Breed']) . "<br>
+                                Age: " . htmlspecialchars($row['Age']) . "
+                            </p>
+                        </div>
+
+                        <div class='d-flex flex-column gap-2'>
+                            <a href='pet_details.php?id=" . $row['ID'] . "' class='btn paw-card-btn'>
+                                🐾 More Details 🐾
+                            </a>
+                            <a href='php/user/apply.php?id=" . $row['ID'] . "' class='btn btn-success'>
+                                Take Me Home
+                            </a>
+                        </div>
+
+                    </div>
                 </div>
-
-                <div class='d-flex flex-column gap-2'>
-                    <a href='pet_details.php?id=" . $row['ID'] . "' class='btn paw-card-btn'>
-                        🐾 More Details 🐾
-                    </a>
-                    <a href='apply.php?id=" . $row['ID'] . "' class='btn btn-success'>
-                        Take Me Home
-                    </a>
-                </div>
-
             </div>
-        </div>
-    </div>
-</div>
-";
+        </div>";
     }
 } else {
     $layout = "<h3 class='text-white'>No pets found matching your filters.</h3>";
 }
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -111,7 +88,7 @@ if (mysqli_num_rows($result) > 0) {
 
 
 <?php
-include_once "navbar-user.php";
+include_once "components/navbar.php";
 ?>  
 
 

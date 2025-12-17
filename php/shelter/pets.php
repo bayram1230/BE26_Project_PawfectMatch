@@ -1,5 +1,6 @@
 <?php
-require_once 'db_connect.php';
+require_once "../../components/db_connect.php";
+
 
 
 if(isset($_GET['edit'])){

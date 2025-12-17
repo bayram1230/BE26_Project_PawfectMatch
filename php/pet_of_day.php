@@ -38,9 +38,10 @@ if ($resultDay && mysqli_num_rows($resultDay) > 0) {
         style="text-shadow: 1px 1px 2px rgba(0,0,0,0.6);">
       🌟 Pet of the Day
     </h2>
-    <p class="lead text-center mb-4" style="opacity: 0.9; color:#000;">
-      Every day we showcase a different pet waiting for a loving home.
-    </p>
+    <p class="lead text-center mb-4" style="opacity: 0.9; color:#fff;">
+  Every day we showcase a different pet waiting for a loving home.
+</p>
+
 
     <?php if ($petDay): ?>
       <div class="card paw-card paw-card--index shadow text-center">

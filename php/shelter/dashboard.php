@@ -1,5 +1,5 @@
 <?php
-require_once 'db.php';
+require_once 'db_connect.php';
 
 
 $pendingApps = $conn->query("SELECT COUNT(*) AS total FROM adoptionrequest")->fetch_assoc()['total'];

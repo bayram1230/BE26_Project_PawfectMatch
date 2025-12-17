@@ -60,55 +60,103 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: #f4f6f8;
+        }
+        .register-card {
+            border-radius: 18px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            background: #9affb4;
+        }
+        .register-card input {
+            border-radius: 8px;
+        }
+        .register-btn {
+            border-radius: 8px;
+            font-weight: 600;
+        }
+    </style>
 </head>
-<body>
-<div class="container mt-5" style="max-width: 500px;">
-    <h1 class="mb-4 text-center">Login</h1>
-    <?php if (!empty($pageMessage)): ?>
-        <div class="alert alert-danger">
-            <?= htmlspecialchars($pageMessage) ?>
+
+<body class="body-pic">
+
+<div class="container my-5">
+
+    <!-- LOGO -->
+    <h1 class="text-center mb-4 fw-bold">
+        <img
+            src="../../img/logo.png"
+            alt="Pawfect Match Logo"
+            style="max-width: 220px; height: auto;"
+        >
+    </h1>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+
+            <div class="card register-card p-4">
+
+                <?php if (!empty($pageMessage)): ?>
+                    <div class="alert alert-danger">
+                        <?= htmlspecialchars($pageMessage) ?>
+                    </div>
+                <?php endif; ?>
+
+                <form method="post" action="login.php">
+
+                    <div class="mb-3">
+                        <label class="form-label">Email *</label>
+                        <input
+                            type="email"
+                            class="form-control"
+                            name="email"
+                            value="<?= htmlspecialchars($email ?? "") ?>"
+                        >
+                        <small class="text-danger">
+                            <?= htmlspecialchars($emailError) ?>
+                        </small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Password *</label>
+                        <input
+                            type="password"
+                            class="form-control"
+                            name="password"
+                        >
+                        <small class="text-danger">
+                            <?= htmlspecialchars($passwordError) ?>
+                        </small>
+                    </div>
+
+                    <button type="submit" class="btn btn-dark w-100 register-btn">
+                        Login
+                    </button>
+
+                    <p class="text-center mt-3 mb-0">
+                        Don’t have an account?
+                        <a href="register.php">Register here</a>
+                    </p>
+
+                </form>
+
+            </div>
+
         </div>
-    <?php endif; ?>
-    <form method="post" action="login.php">
-        <div class="mb-3">
-            <label class="form-label">Email address</label>
-            <input
-                type="email"
-                class="form-control"
-                name="email"
-                required
-            >
-            <div class="text-danger"><?= htmlspecialchars($emailError) ?></div>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Password</label>
-            <input
-                type="password"
-                class="form-control"
-                name="password"
-                required
-            >
-            <div class="text-danger"><?= htmlspecialchars($passwordError) ?></div>
-        </div>
-        <div class="d-grid gap-2">
-            <button type="submit" class="btn btn-primary">
-                Login
-            </button>
-        </div>
-        <div class="text-center mt-3">
-            <a href="register.php">Create an account</a>
-        </div>
-    </form>
+    </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -8,11 +8,12 @@ require_once "../../components/db_connect.php";
 require_once "../functions/get_profile.php";
 
 /* Profile picture */
-if (isset($_SESSION['user']) || isset($_SESSION['admin'])) {
+if (isset($_SESSION['username'])) {
     $profilePic = getProfilePicture($conn);
 } else {
     $profilePic = "default-users.png";
 }
+
 
 /* Load pets */
 $sql = "SELECT * FROM animal";

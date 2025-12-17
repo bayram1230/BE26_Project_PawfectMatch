@@ -10,49 +10,62 @@ $result = mysqli_query($conn, $sql);
 <head>
   <meta charset="UTF-8">
   <title>Fostered Pets</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Shared CSS + Bootstrap + FontAwesome -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+  <link href="../css/style.css" rel="stylesheet">
+
   <style>
-    /* Scoped styles: ONLY for Fostered Pets cards */
-    .fostered-pets .fp-card-img {
-      height: 250px;
-      object-fit: cover;
-      transition: transform 0.3s ease;
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      /* ✅ no forced background-color, inherits your project’s footer styling */
+      padding: 1rem 0;
     }
-    .fostered-pets .fp-card-img:hover {
-      transform: scale(1.05);
-    }
-    .fostered-pets .card {
-      border-radius: .5rem;
-      box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+    body {
+      margin-bottom: 100px; /* prevent overlap with sticky footer */
     }
   </style>
 </head>
-<body>
-  <!-- Navbar OUTSIDE container -->
-  <?php include __DIR__ . '/navbar.php'; ?>
+<body class="body-pic">
+  <div class="container index-container mt-5">
+    <!-- Professional heading + intro -->
+    <h2 class="paw-card-h1 text-white text-center mb-3"
+        style="text-shadow: 1px 1px 2px rgba(0,0,0,0.6);">
+      🐕 Fostered Pets
+    </h2>
+    <p class="lead text-white text-center mb-4" style="opacity: 0.9;">
+      These pets are currently in foster care, waiting for their forever homes.
+    </p>
 
-  <div class="container mt-5 fostered-pets">
-    <h2 class="mt-4">🐕 Fostered Pets</h2>
-    <p class="lead">These pets are currently in foster care, waiting for their forever homes.</p>
-
-    <div class="row">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
       <?php if ($result && mysqli_num_rows($result) > 0): ?>
-        <?php while ($pet = mysqli_fetch_assoc($result)): 
-          $picture = !empty($pet['picture']) ? $pet['picture'] : 'pet.jpg';
-          $picturePath = 'img/' . htmlspecialchars($picture);
+        <?php while ($pet = mysqli_fetch_assoc($result)):
+          // Use DB picture if set; otherwise fallback to default-animals.png
+          $picture = !empty($pet['picture']) ? $pet['picture'] : 'default-animals.png';
+          $picturePath = "../img/" . htmlspecialchars($picture);
         ?>
-          <div class="col-md-4 mb-4">
-            <!-- Match Pet of the Week look, scoped so other pages remain unchanged -->
-            <div class="card text-center h-100">
-              <h5 class="card-header"><?= htmlspecialchars($pet['name']) ?></h5>
-              <img src="<?= $picturePath ?>" 
-                   class="fp-card-img img-fluid rounded mx-auto d-block mb-3" 
-                   alt="<?= htmlspecialchars($pet['name']) ?>">
-              <div class="card-body">
-                <p class="card-text">
-                  <?= !empty($pet['short_description']) ? htmlspecialchars($pet['short_description']) : 'No description available.' ?>
-                </p>
-                <a href="details.php?id=<?= intval($pet['id']) ?>" class="btn btn-success">View Details</a>
+          <div class="col">
+            <div class="card paw-card paw-card--index h-100">
+              <div class="paw-card-inner">
+                <div class="paw-card-content">
+                  <img src="<?= $picturePath ?>"
+                       class="paw-card-img"
+                       alt="<?= htmlspecialchars($pet['name']) ?>"
+                       onerror="this.src='../img/default-animals.png'">
+                  <div class="paw-card-title-wrapper">
+                    <h5 class="paw-card-title"><?= htmlspecialchars($pet['name']) ?></h5>
+                    <hr class="index-card-hr">
+                    <p class="paw-card-meta">
+                      <?= !empty($pet['short_description']) ? htmlspecialchars($pet['short_description']) : 'No description available.' ?>
+                    </p>
+                  </div>
+                  <a href="details.php?id=<?= intval($pet['id']) ?>" class="btn paw-card-btn">View Details</a>
+                </div>
               </div>
             </div>
           </div>
@@ -63,10 +76,10 @@ $result = mysqli_query($conn, $sql);
     </div>
   </div>
 
-  <!-- Footer OUTSIDE container -->
+  <!-- Footer -->
   <?php include __DIR__ . '/footer.php'; ?>
 
-  <!-- Bootstrap JS bundle for dropdowns -->
+  <!-- Bootstrap JS bundle -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

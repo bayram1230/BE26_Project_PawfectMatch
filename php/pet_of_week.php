@@ -2,10 +2,9 @@
 require_once __DIR__ . "/functions/db_connect.php";
 require_once __DIR__ . "/functions/get_profile.php";
 
-// Pick a random available pet for Pet of the Week
-$sql = "SELECT * FROM pets WHERE status='available' ORDER BY RAND() LIMIT 1";
+// Get Pet of the Week explicitly
+$sql = "SELECT * FROM pets WHERE status='pet_of_week' LIMIT 1";
 $result = mysqli_query($conn, $sql);
-
 $pet = null;
 if ($result && mysqli_num_rows($result) > 0) {
     $pet = mysqli_fetch_assoc($result);
@@ -16,49 +15,48 @@ if ($result && mysqli_num_rows($result) > 0) {
 <head>
   <meta charset="UTF-8">
   <title>Pet of the Week</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Bootstrap + FontAwesome + Shared CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+  <link href="../css/style.css" rel="stylesheet">
+
   <style>
-    /* Scoped styles: ONLY for Pet of the Week card */
-    .pet-week .pw-card-img {
-      height: 250px;
-      object-fit: cover;
-      transition: transform 0.3s ease;
-    }
-    .pet-week .pw-card-img:hover {
-      transform: scale(1.05);
-    }
-    .pet-week .card {
-      border-radius: .5rem;
-      box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
-    }
-    .pet-week .card-header,
-    .pet-week .card-body {
-      text-align: center; /* Center title and text */
-    }
+    footer { position: fixed; bottom: 0; left: 0; width: 100%; padding: 1rem 0; }
+    body { margin-bottom: 120px; }
+    .index-container { padding-bottom: 140px; }
+    .paw-card-img { max-width: 320px; height: auto; object-fit: cover; transition: transform 0.3s ease; }
+    .paw-card-img:hover { transform: scale(1.05); }
   </style>
 </head>
-<body>
-  <!-- Navbar OUTSIDE container -->
-  <?php include __DIR__ . '/navbar.php'; ?>
-
-  <div class="container mt-5 pet-week">
-    <h2 class="mt-4 text-center">🐾 Pet of the Week</h2>
-    <p class="lead text-center">Each week we highlight one special pet looking for a forever home.</p>
+<body class="body-pic">
+  <div class="container index-container mt-5">
+    <h2 class="paw-card-h1 text-white text-center mb-3"
+        style="text-shadow: 1px 1px 2px rgba(0,0,0,0.6);">
+      🐾 Pet of the Week
+    </h2>
+    <p class="lead text-white text-center mb-4" style="opacity: 0.9;">
+      Each week we highlight one special pet looking for a forever home.
+    </p>
 
     <?php if ($pet): ?>
-      <div class="card mb-4">
-        <h4 class="card-header"><?= htmlspecialchars($pet['name']) ?></h4>
-        <img src="img/<?= htmlspecialchars(!empty($pet['picture']) ? $pet['picture'] : 'pet.jpg') ?>" 
-             alt="<?= htmlspecialchars($pet['name']) ?>" 
-             class="pw-card-img img-fluid rounded mx-auto d-block mb-3">
+      <div class="card paw-card paw-card--index shadow text-center">
         <div class="card-body">
-          <p class="card-text">
+          <h3 class="paw-card-h1 mb-3 text-white"><?= htmlspecialchars($pet['name']) ?></h3>
+          <img src="../img/<?= htmlspecialchars(!empty($pet['picture']) ? $pet['picture'] : 'default-animals.png') ?>" 
+               alt="<?= htmlspecialchars($pet['name']) ?>" 
+               class="img-fluid mx-auto d-block rounded mb-3 paw-card-img"
+               onerror="this.src='../img/default-animals.png'">
+          <p class="text-white">
             <?= !empty($pet['short_description']) ? htmlspecialchars($pet['short_description']) : 'No description available.' ?><br>
             <strong>Breed:</strong> <?= !empty($pet['breed']) ? htmlspecialchars($pet['breed']) : 'Unknown' ?><br>
             <strong>Age:</strong> <?= htmlspecialchars($pet['age']) ?> years<br>
-            <strong>Location:</strong> <?= !empty($pet['location']) ? htmlspecialchars($pet['location']) : 'Not specified' ?>
+            <?php if (isset($pet['location'])): ?>
+              <strong>Location:</strong> <?= !empty($pet['location']) ? htmlspecialchars($pet['location']) : 'Not specified' ?>
+            <?php endif; ?>
           </p>
-          <a href="details.php?id=<?= intval($pet['id']) ?>" class="btn btn-success">Learn More</a>
+          <a href="details.php?id=<?= intval($pet['id']) ?>" class="btn paw-card-btn">Learn More</a>
         </div>
       </div>
     <?php else: ?>
@@ -66,10 +64,7 @@ if ($result && mysqli_num_rows($result) > 0) {
     <?php endif; ?>
   </div>
 
-  <!-- Footer OUTSIDE container -->
   <?php include __DIR__ . '/footer.php'; ?>
-
-  <!-- Bootstrap JS bundle for dropdowns -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -36,7 +36,7 @@ if (isset($_POST["apply"])) {
 
 
 
-    // es muss mind. living, experience und reason ausgefüllt sein
+    // es muss mind. living, experience und reason ausgefüllt sein asdfsdfasdf
     if (empty($living) || empty($experience) || empty($reason)) {
         $error = true;
         $msg = "All fields are required.";

@@ -1,0 +1,179 @@
+🧩 1. Grundarchitektur (Session & Rollen)
+🔐 Session-Logik
+
+Ihr habt genau 1 Session-System (richtig so):
+
+$_SESSION['username']
+$_SESSION['role']   // 'admin' | 'shelter' | 'user'
+
+
+👉 Keine drei Sessions, sondern eine Session + Rolle
+👉 Das ist Best Practice und absolut prüfungsreif
+
+👥 2. Rollen & Berechtigungen (final geklärt)
+👤 USER (Adopter)
+
+Zweck: Tiere suchen & adoptieren
+
+Darf:
+
+Dashboard / Übersicht
+
+Pets durchsuchen (read-only)
+
+Gespeicherte Pets
+
+Eigene Adoption Applications sehen
+
+Messages (mit Shelter)
+
+Profil / Settings bearbeiten
+
+Darf NICHT:
+
+Pets erstellen
+
+Pets updaten
+
+Pets löschen
+
+Admin-/Shelter-Seiten betreten
+
+➡️ User Dashboard = Read-only + persönliche Daten
+
+🏠 SHELTER (Adoptionsstelle)
+
+Zweck: Tiere & Bewerbungen verwalten
+
+Darf:
+
+Eigene Pets CRUD (Create, Update, Delete)
+
+Applications prüfen & entscheiden
+
+Messages mit Usern
+
+Ressourcen hochladen
+
+Shelter Dashboard
+
+Darf NICHT:
+
+Andere User verwalten
+
+Andere Shelter verwalten
+
+Systemreports sehen
+
+➡️ Shelter = operative Arbeit
+
+🛡️ ADMIN
+
+Zweck: System kontrollieren & moderieren
+
+Darf (ALLES):
+
+Zugriff auf alle öffentlichen Seiten (User-Sicht)
+
+Zugriff auf alle Dashboards
+
+Users & Shelter verwalten
+
+Pets moderieren (freigeben/ablehnen)
+
+Applications moderieren
+
+Reports & History sehen
+
+Wichtiges Design-Entscheid:
+
+❌ Admin erstellt keine Pets
+
+✅ Admin darf Pets updaten/löschen, wenn nötig (Moderation)
+
+➡️ Admin = Kontrolle, nicht operativer Alltag
+
+🧭 3. Navigation – aktuelles Konzept (sehr gut!)
+🌍 Öffentliche Navbar (User-Sicht)
+
+Home
+
+Pets
+
+Info
+
+Contact
+
+Profil-Dropdown
+
+👉 Admin sieht diese Navbar auch, damit er:
+
+alle Seiten testen kann
+
+User Experience prüfen kann
+
+🧱 Dashboard-Navigation (Offcanvas)
+Rolle	Navigation
+User	Offcanvas = User-Funktionen
+Shelter	Offcanvas = Shelter-Funktionen
+Admin	Offcanvas = Admin-Funktionen
+
+👉 Admin Navbar = Offcanvas
+👉 Keine doppelte Admin-Navigation oben (das habt ihr jetzt richtig erkannt)
+
+🧑‍💻 4. Aktueller Code-Zustand
+✅ Was funktioniert
+
+Login mit Hash (SHA256)
+
+Rollen aus DB (enum('admin','user','shelter'))
+
+Profilbild via getProfilePicture()
+
+User Dashboard korrekt eingeschränkt
+
+Admin Dashboard mit Offcanvas
+
+Navbar dynamisch nach Rolle
+
+⚠️ Was bewusst offen bleibt (okay!)
+
+Feinere Permission-Checks (requireAdmin(), requireShelter())
+
+Messages-Logik (User ↔ Shelter)
+
+Application Workflow (Status: pending/approved/rejected)
+
+🧠 5. Sicherheits- & Prüfungsbewertung
+✔ Positiv (sehr wichtig)
+
+Eine Session, klare Rollen
+
+Trennung von Zuständigkeiten
+
+Kein Rollen-Chaos
+
+Admin darf prüfen, Shelter arbeitet, User konsumiert
+
+Klare Navigation pro Rolle
+
+🧪 Prüfer-Kommentar (realistisch)
+
+„Saubere Rollenarchitektur, logisch getrennte Dashboards, sinnvolle Rechteverteilung.“
+
+🧾 Kurzfassung (1 Satz)
+
+Ihr habt ein sauberes, skalierbares Rollen- & Navigationssystem mit Admin-Kontrolle, Shelter-Operativbetrieb und User-Read-Only-Zugriff umgesetzt.
+
+🔜 Nächste sinnvolle Schritte (wenn du willst)
+
+requireAdmin() / requireUser() / requireShelter()
+
+Application Status Flow (pending → approved → rejected)
+
+Message-System logisch verbinden
+
+Kleine Security-Härtung (Page Guards)
+
+Sag mir einfach:
+👉 „Nächster Schritt: ___“

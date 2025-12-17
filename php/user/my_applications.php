@@ -33,6 +33,8 @@ $result = mysqli_query($conn, $sql);
 <body class="body-pic">
 
 <?php require_once "../../components/navbar.php"; ?>
+<?php require_once __DIR__ . "/user_menu.php"; ?>
+<?php require_once __DIR__ . "/btn.php"; ?>
 
 <div class="container my-5">
     <h1 class="mb-4 text-center text-white">My Applications</h1>

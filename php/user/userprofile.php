@@ -54,15 +54,24 @@ $row = mysqli_fetch_assoc($result);
             border-radius: 8px;
             font-weight: 600;
         }
+      .offcanvas,
+.offcanvas-start {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+
     </style>
 </head>
 
 <body class="body-pic">
 
 <?php require_once "../../components/navbar.php"; ?>
-
+<?php require_once __DIR__ . "/user_menu.php"; ?>
+<?php require_once __DIR__ . "/btn.php"; ?>
 
 <div class="container my-5">
+
 
     <div class="row justify-content-center">
         <div class="col-md-8 col-lg-8">

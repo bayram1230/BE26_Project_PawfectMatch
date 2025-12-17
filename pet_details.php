@@ -47,6 +47,8 @@ if (!empty($row['ImageUrl'])) {
 <body class="body-pic">
 
 <?php require_once "components/navbar.php"; ?>
+<?php require_once __DIR__ . "/php/user/user_menu.php"; ?>
+<?php require_once __DIR__ . "/php/user/btn.php"; ?>
 
 <div class="container details-container my-5">
 

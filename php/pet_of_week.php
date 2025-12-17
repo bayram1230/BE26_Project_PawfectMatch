@@ -28,27 +28,29 @@ if ($result && mysqli_num_rows($result) > 0) {
     .index-container { padding-bottom: 140px; }
     .paw-card-img { max-width: 320px; height: auto; object-fit: cover; transition: transform 0.3s ease; }
     .paw-card-img:hover { transform: scale(1.05); }
+    .paw-card-text { color: #000; } /* ✅ force card text to black */
+    .paw-card-h1 { color: #000; }   /* ✅ headings inside card black */
   </style>
 </head>
 <body class="body-pic">
   <div class="container index-container mt-5">
-    <h2 class="paw-card-h1 text-white text-center mb-3"
+    <h2 class="paw-card-h1 text-center mb-3"
         style="text-shadow: 1px 1px 2px rgba(0,0,0,0.6);">
       🐾 Pet of the Week
     </h2>
-    <p class="lead text-white text-center mb-4" style="opacity: 0.9;">
+    <p class="lead text-center mb-4" style="opacity: 0.9; color:#000;">
       Each week we highlight one special pet looking for a forever home.
     </p>
 
     <?php if ($pet): ?>
       <div class="card paw-card paw-card--index shadow text-center">
-        <div class="card-body">
-          <h3 class="paw-card-h1 mb-3 text-white"><?= htmlspecialchars($pet['name']) ?></h3>
-          <img src="../img/<?= htmlspecialchars(!empty($pet['picture']) ? $pet['picture'] : 'default-animals.png') ?>" 
+        <div class="card-body paw-card-text">
+          <h3 class="paw-card-h1 mb-3"><?= htmlspecialchars($pet['name']) ?></h3>
+          <img src="../img/<?= htmlspecialchars(!empty($pet['ImageUrl']) ? $pet['ImageUrl'] : 'default-animals.png') ?>" 
                alt="<?= htmlspecialchars($pet['name']) ?>" 
                class="img-fluid mx-auto d-block rounded mb-3 paw-card-img"
                onerror="this.src='../img/default-animals.png'">
-          <p class="text-white">
+          <p>
             <?= !empty($pet['short_description']) ? htmlspecialchars($pet['short_description']) : 'No description available.' ?><br>
             <strong>Breed:</strong> <?= !empty($pet['breed']) ? htmlspecialchars($pet['breed']) : 'Unknown' ?><br>
             <strong>Age:</strong> <?= htmlspecialchars($pet['age']) ?> years<br>

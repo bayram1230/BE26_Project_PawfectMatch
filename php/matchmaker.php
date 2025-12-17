@@ -133,7 +133,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <?php if ($matchRow): ?>
       <div class="card mt-4">
         <h4 class="card-header"><?= htmlspecialchars($matchRow['Name']) ?></h4>
-        <img src="<?= htmlspecialchars(!empty($matchRow['ImageUrl']) ? $matchRow['ImageUrl'] : '../img/default-animals.png') ?>"
+        <img src="../img/<?= htmlspecialchars(!empty($matchRow['ImageUrl']) ? $matchRow['ImageUrl'] : 'default-animals.png') ?>"
              alt="<?= htmlspecialchars($matchRow['Name']) ?>"
              class="img-fluid rounded mx-auto d-block mb-3 match-img"
              onerror="this.src='../img/default-animals.png'">

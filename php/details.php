@@ -25,8 +25,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     if ($result && mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_assoc($result);
 
-        // Ensure picture always has a value
-        $picture = !empty($row['picture']) ? $row['picture'] : "default-animals.png";
+        // Ensure ImageUrl always has a value
+        $picture = !empty($row['ImageUrl']) ? $row['ImageUrl'] : "default-animals.png";
         $picturePath = "../img/" . htmlspecialchars($picture);
 
         $layout = "
@@ -40,7 +40,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
                          class='img-fluid rounded mx-auto d-block mb-3 paw-card-img' 
                          alt='" . htmlspecialchars($row['name']) . "'
                          onerror=\"this.src='../img/default-animals.png'\">
-                    <table class='table table-striped table-bordered w-75 mx-auto mb-3'>
+                    <table class='table table-striped table-bordered w-75 mx-auto mb-3 text-dark'>
         ";
 
         // Only show fields if they have values
@@ -57,7 +57,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
 
         foreach ($fields as $label => $value) {
             if (!empty($value)) {
-                $layout .= "<tr><th>$label</th><td>" . htmlspecialchars($value) . "</td></tr>";
+                $layout .= "<tr><th class='text-dark'>$label</th><td class='text-dark'>" . htmlspecialchars($value) . "</td></tr>";
             }
         }
 
@@ -94,6 +94,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
       footer { position: fixed; bottom: 0; left: 0; width: 100%; padding: 1rem 0; }
       body { margin-bottom: 120px; }
       .index-container { padding-bottom: 140px; }
+      .paw-card-h1 { color:#000; } /* ✅ headings black */
+      .details-body { color:#000; } /* ✅ ensure all text inside card is black */
     </style>
 </head>
 <body class="body-pic">

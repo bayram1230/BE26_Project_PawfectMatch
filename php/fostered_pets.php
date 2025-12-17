@@ -23,7 +23,6 @@ $result = mysqli_query($conn, $sql);
       bottom: 0;
       left: 0;
       width: 100%;
-      /* ✅ no forced background-color, inherits your project’s footer styling */
       padding: 1rem 0;
     }
     body {
@@ -33,7 +32,6 @@ $result = mysqli_query($conn, $sql);
 </head>
 <body class="body-pic">
   <div class="container index-container mt-5">
-    <!-- Professional heading + intro -->
     <h2 class="paw-card-h1 text-white text-center mb-3"
         style="text-shadow: 1px 1px 2px rgba(0,0,0,0.6);">
       🐕 Fostered Pets
@@ -45,8 +43,8 @@ $result = mysqli_query($conn, $sql);
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
       <?php if ($result && mysqli_num_rows($result) > 0): ?>
         <?php while ($pet = mysqli_fetch_assoc($result)):
-          // Use DB picture if set; otherwise fallback to default-animals.png
-          $picture = !empty($pet['picture']) ? $pet['picture'] : 'default-animals.png';
+          // Use DB ImageUrl if set; otherwise fallback to default-animals.png
+          $picture = !empty($pet['ImageUrl']) ? $pet['ImageUrl'] : 'default-animals.png';
           $picturePath = "../img/" . htmlspecialchars($picture);
         ?>
           <div class="col">
@@ -76,10 +74,8 @@ $result = mysqli_query($conn, $sql);
     </div>
   </div>
 
-  <!-- Footer -->
   <?php include __DIR__ . '/footer.php'; ?>
 
-  <!-- Bootstrap JS bundle -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

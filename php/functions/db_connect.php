@@ -3,7 +3,7 @@
 $hostname = "localhost";   // or 127.0.0.1
 $username = "root";        // your MySQL username
 $password = "";            // your MySQL password (often empty for local dev)
-$database = "pawfectmatch"; // the name of your database
+$database = "petadoption"; // the name of your database
 
 // Create connection
 $conn = mysqli_connect($hostname, $username, $password, $database);

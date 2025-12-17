@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $password = hash("sha256", $password);
 
-        $sql = "SELECT Username, Role FROM users WHERE Email = ? AND Password = ?";
+        $sql = "SELECT id, Username, Role FROM users WHERE Email = ? AND Password = ?";
         $stmt = mysqli_prepare($conn, $sql);
         mysqli_stmt_bind_param($stmt, "ss", $email, $password);
         mysqli_stmt_execute($stmt);
@@ -54,6 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // 🔑 NEUE Session-Logik
             $_SESSION['username'] = $row['Username'];
             $_SESSION['role'] = $row['Role'];
+            $_SESSION['user_id']  = $row['id'];
 
             // Weiterleitung je nach Rolle
             header("Location: " . getProfileLink());

@@ -17,7 +17,8 @@ if (!isset($_GET["id"])) {
     exit;
 }
 
-$animalId = $_GET["id"];
+$animalId = (int) $_GET["id"];
+$userId   = (int) $_SESSION['user_id'];
 $username = $_SESSION['username'];
 $error = false;
 
@@ -35,7 +36,7 @@ if (isset($_POST["apply"])) {
 
 
 
-    // es muss mind. living, experience und reason ausgefüllt sein
+    // es muss mind. living, experience und reason ausgefüllt sein asdfsdfasdf
     if (empty($living) || empty($experience) || empty($reason)) {
         $error = true;
         $msg = "All fields are required.";
@@ -55,8 +56,8 @@ if (isset($_POST["apply"])) {
             "Additional notes: $notes";
 
         $sql = "
-            INSERT INTO adoptionrequest (Username, AnimalID, SurveyAnswer)
-            VALUES ('$username', '$animalId', '$surveyAnswer')
+     INSERT INTO adoptionrequest (Username, AnimalID, SurveyAnswer, user_id)
+      VALUES ('$username', '$animalId', '$surveyAnswer', '$userId')
         ";
 
         if (mysqli_query($conn, $sql)) {
@@ -74,74 +75,103 @@ if (isset($_POST["apply"])) {
 <head>
     <meta charset="UTF-8">
     <title>Apply for Adoption</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-      <link href="../../css/style.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+
+    <style>
+        .register-card {
+            border-radius: 18px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            background: #9affb4;
+        }
+        .register-card textarea {
+            border-radius: 8px;
+        }
+        .register-btn {
+            border-radius: 8px;
+            font-weight: 600;
+        }
+    </style>
 </head>
+
 <body class="body-pic">
 
 <?php require_once "../../components/navbar.php"; ?>
+<?php require_once __DIR__ . "/user_menu.php"; ?>
+<?php require_once __DIR__ . "/btn.php"; ?>
 
-<div class="container my-5" style="max-width: 600px;">
-    <h2 class="mb-4 text-center text-white">Adoption Application</h2>
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-8">
 
-    <?php if (isset($msg)): ?>
-        <div class="alert alert-danger"><?= $msg ?></div>
-    <?php endif; ?>
+            <div class="card register-card p-4">
 
-    <form method="post">
-        <div class="mb-3">
-            <label class="form-label text-white">Living situation *</label>
-            <textarea name="living" class="form-control" rows="2"></textarea>
+                <h4 class="text-center mb-4">Adoption Application</h4>
+
+                <?php if (isset($msg)): ?>
+                    <div class="alert alert-danger"><?= $msg ?></div>
+                <?php endif; ?>
+
+                <form method="post">
+
+                    <div class="mb-3">
+                        <label class="form-label">Living situation *</label>
+                        <textarea name="living" class="form-control" rows="2"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Previous pet ownership experience *</label>
+                        <textarea name="experience" class="form-control" rows="2"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Reason for adopting *</label>
+                        <textarea name="reason" class="form-control" rows="2"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Daily routine & time availability</label>
+                        <textarea name="routine" class="form-control" rows="2"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Household & allergies</label>
+                        <textarea name="allergies" class="form-control" rows="2"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Financial readiness</label>
+                        <textarea name="financial" class="form-control" rows="2"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Home environment</label>
+                        <textarea name="environment" class="form-control" rows="2"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Animal preferences</label>
+                        <textarea name="preferences" class="form-control" rows="2"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Additional notes</label>
+                        <textarea name="notes" class="form-control" rows="2"></textarea>
+                    </div>
+
+                    <button type="submit" name="apply" class="btn btn-dark w-100 register-btn mt-3">
+                        Submit Application
+                    </button>
+
+                </form>
+
+            </div>
         </div>
-
-        <div class="mb-3">
-            <label class="form-label text-white">Previous pet ownership experience *</label>
-            <textarea name="experience" class="form-control" rows="2"></textarea>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label text-white">Reason for adopting *</label>
-            <textarea name="reason" class="form-control" rows="2"></textarea>
-            
-        <div class="mb-3">
-
-    <label class="form-label text-white">Daily routine & time availability</label>
-    <textarea name="routine" class="form-control" rows="2"></textarea>
     </div>
-
-    <div class="mb-3">
-        <label class="form-label text-white">Household & allergies</label>
-        <textarea name="allergies" class="form-control" rows="2"></textarea>
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label text-white">Financial readiness</label>
-        <textarea name="financial" class="form-control" rows="2"></textarea>
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label text-white">Home environment</label>
-        <textarea name="environment" class="form-control" rows="2"></textarea>
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label text-white">Animal preferences</label>
-        <textarea name="preferences" class="form-control" rows="2"></textarea>
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label text-white">Additional notes</label>
-        <textarea name="notes" class="form-control" rows="2"></textarea>
-    </div>
-
-
-        <button type="submit" name="apply" class="btn btn-success mt-3">
-            Submit Application
-        </button>
-
-    </form>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

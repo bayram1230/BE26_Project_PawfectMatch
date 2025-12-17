@@ -83,13 +83,17 @@ if (mysqli_num_rows($result) > 0) {
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
       <link href="css/style.css" rel="stylesheet">
 </head>
-
+<style>
+  
+</style>
 <body class="body-pic">
 
 
 <?php
 include_once "components/navbar.php";
 ?>  
+<?php require_once __DIR__ . "/php/user/user_menu.php"; ?>
+<?php require_once __DIR__ . "/php/user/btn.php"; ?>
 
 
 

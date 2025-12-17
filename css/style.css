@@ -83,6 +83,41 @@
   max-width: 50px;
   max-height: 50px;
 }
+@media (max-width: 991px) {
+
+  .navbar-collapse {
+    background: linear-gradient(180deg, #ffffff, #eafdf7);
+    padding: 18px;
+    border-radius: 18px;
+    margin-top: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  }
+
+  .navbar-links {
+    position: static;
+    transform: none;
+    gap: 8px;
+  }
+
+  .navbar-nav .nav-link {
+    font-size: 20px;
+    padding: 12px;
+    border-radius: 12px;
+    transition: background 0.2s ease;
+  }
+
+  .navbar-nav .nav-link:hover {
+    background: linear-gradient(90deg, #a8ff78, #78ffd6);
+  }
+
+  .dropdown-menu {
+    position: static;
+    width: 100%;
+    margin-top: 6px;
+    border-radius: 12px;
+    box-shadow: none;
+  }
+}
 /* Navbar End */
 /* Hero Start */
 .hero-section {
@@ -884,3 +919,15 @@ footer {
   }
   /* Details End */
 }
+/* User Dashboard Start */
+.my-user-menu-btn {
+  background: linear-gradient(90deg, #78ffd6, #a8ff78);
+  color: #0b5ed7;
+  border: none;
+  font-weight: bold;
+  font-size: 18px;
+  padding: 10px 18px;
+  border-radius: 12px;
+  z-index: 1030; 
+}
+/* =========================

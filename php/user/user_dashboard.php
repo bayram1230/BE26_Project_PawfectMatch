@@ -3,6 +3,9 @@ session_start();
 
 require_once "../../components/db_connect.php";
 require_once "../functions/get_profile.php";
+require_once __DIR__ . "/../functions/user_restriction.php";
+
+requireUser(); // nur User darf rein
 
 /* Security: only logged-in users */
 if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'user') {
@@ -114,7 +117,7 @@ $layout = "
             <li><a href="my_applications.php" class="custom-nav-link">My Applications</a></li>
             <hr>
 
-            <li><a href="user_messages.php" class="custom-nav-link">Messages</a></li>
+            <li><a href="messages.php" class="custom-nav-link">Messages</a></li>
             <hr>
 
             <li><a href="userprofile.php" class="custom-nav-link">Profile / Settings</a></li>

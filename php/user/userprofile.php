@@ -2,6 +2,9 @@
 session_start();
 require_once "../../components/db_connect.php";
 require_once "../functions/get_profile.php";
+require_once __DIR__ . "/../functions/user_restriction.php";
+
+requireUser(); // nur User darf rein
 
 
 /* nur User darf rein */

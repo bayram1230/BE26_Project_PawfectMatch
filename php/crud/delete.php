@@ -5,9 +5,9 @@ require_once __DIR__ . "/../functions/user_restriction.php";
 require_once __DIR__ . "/../../components/db_connect.php";
 
 /* ---------------------------------
-   Admin-only protection
+   Admin OR Shelter protection
 ---------------------------------- */
-requireAdmin();
+requireAdminOrShelter(); // Stelle sicher, dass du diese Funktion definiert hast
 
 /* ---------------------------------
    Check ID (POST!)
@@ -19,9 +19,9 @@ if (!isset($_POST['id']) || !is_numeric($_POST['id'])) {
 $id = intval($_POST['id']);
 
 /* ---------------------------------
-   Get image from DB
+   Get ImageUrl from DB
 ---------------------------------- */
-$sql = "SELECT img FROM animal WHERE ID = ?";
+$sql = "SELECT ImageUrl FROM animal WHERE ID = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $id);
 $stmt->execute();
@@ -33,20 +33,13 @@ if (!$row) {
 }
 
 /* ---------------------------------
-   Delete image (only local files)
+   Delete local image file
 ---------------------------------- */
-if (!empty($row['img'])) {
-
-    // delete ONLY if NOT URL and NOT default image
-    if (
-        strpos($row['img'], 'http') !== 0 &&
-        $row['img'] !== 'default-animals.png'
-    ) {
-        $filePath = __DIR__ . "/../../img/" . $row['img'];
-
-        if (file_exists($filePath)) {
-            unlink($filePath);
-        }
+$image = $row['ImageUrl'];
+if (!empty($image) && strpos($image, 'http') !== 0 && $image !== 'default-animals.png') {
+    $filePath = __DIR__ . "/../../img/" . $image;
+    if (file_exists($filePath)) {
+        unlink($filePath);
     }
 }
 
@@ -59,7 +52,7 @@ $stmt2->bind_param("i", $id);
 $stmt2->execute();
 
 /* ---------------------------------
-   Redirect
+   Redirect back to pet listings
 ---------------------------------- */
-header("Location: /index.php?deleted=1");
+header("Location: /php/shelter/pets.php?deleted=1");
 exit;

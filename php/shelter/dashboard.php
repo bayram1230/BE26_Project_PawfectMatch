@@ -1,5 +1,8 @@
 <?php
 require_once "../../components/db_connect.php";
+require_once "../../components/navbar.php";
+ require_once "../functions/user_restriction.php";
+
 
 
 $pendingApps = $conn->query("SELECT COUNT(*) AS total FROM adoptionrequest")->fetch_assoc()['total'];
@@ -14,6 +17,7 @@ $totalPets = $conn->query("SELECT COUNT(*) AS total FROM animal")->fetch_assoc()
 <meta charset="UTF-8">
 <title>Dashboard</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+<link href="../../css/style.css" rel="stylesheet">
 </head>
 <body>
 <div class="container mt-5">
@@ -37,5 +41,7 @@ $totalPets = $conn->query("SELECT COUNT(*) AS total FROM animal")->fetch_assoc()
     </div>
 </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+ 
 </body>
 </html>

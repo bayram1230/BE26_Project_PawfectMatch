@@ -1,23 +1,16 @@
 <?php
 session_start();
 
+require_once __DIR__ . "/../functions/user_restriction.php";
+requireAdminOrShelter();
+
 require_once __DIR__ . "/../../components/db_connect.php";
 require_once __DIR__ . "/../functions/get_profile.php";
-require_once __DIR__ . "/../functions/user_restriction.php";
-
-/* ---------------------------------
-   ADMIN ONLY
----------------------------------- */
-requireAdmin();
 
 /* ---------------------------------
    Profile picture
 ---------------------------------- */
-if (isset($_SESSION['user']) || isset($_SESSION['admin'])) {
-    $profilePic = getProfilePicture($conn);
-} else {
-    $profilePic = "default-users.png";
-}
+$profilePic = getProfilePicture($conn) ?? "default-users.png";
 
 /* ---------------------------------
    Check ID
@@ -57,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $adoption_requirements = mysqli_real_escape_string($conn, $_POST["adoption_requirements"]);
     $img_url = trim($_POST["img_url"]);
 
-    $imageName = $row['img']; // keep existing by default
+    $imageName = $row['ImageUrl']; // keep existing by default
 
     /* IMAGE HANDLING */
     if (!empty($img_url) && filter_var($img_url, FILTER_VALIDATE_URL)) {
@@ -65,13 +58,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     } elseif (!empty($_FILES["img"]["name"])) {
 
         $imageName = time() . "_" . basename($_FILES["img"]["name"]);
-        $targetDir = "../../img/";
+        $targetDir = "../../img/animals/";
 
         if (!move_uploaded_file($_FILES["img"]["tmp_name"], $targetDir . $imageName)) {
-            $imageName = $row['img'];
+            $imageName = $row['ImageUrl'];
         }
     }
 
+    /* ---------------------------------
+       Update database
+    ---------------------------------- */
     $updateSql = "
         UPDATE animal SET
             Type = '$type',
@@ -83,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             Size = '$size',
             Description = '$description',
             adoption_requirements = '$adoption_requirements',
-            img = '$imageName'
+            ImageUrl = '$imageName'
         WHERE ID = $id
     ";
 
@@ -91,7 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         header("Location: details.php?id=$id&updated=1");
         exit;
     } else {
-        $message = "<div class='alert alert-danger'>Update failed.</div>";
+        $message = "<div class='alert alert-danger'>Update failed: " . mysqli_error($conn) . "</div>";
     }
 }
 
@@ -178,70 +174,16 @@ $layout = "
 <body>
 
 <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg custom-navbar sticky-top">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/index.php">
-                <img
-                    src="/img/navbar-logo.png"
-                    alt="logo"
-                    class="navbar-logo"
-                >
-            </a>
-            <button
-                class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarNavDarkDropdown"
-                aria-controls="navbarNavDarkDropdown"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-            >
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
-                <ul class="navbar-nav mx-auto navbar-links">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/index.php">Home</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav ms-auto navbar-profile">
-                    <li class="nav-item dropdown profile-dropdown">
-                        <img
-                            src="/img/<?= htmlspecialchars($profilePic) ?>"
-                            class="rounded-circle"
-                            alt="Profile picture"
-                        >
-                        <a
-                            class="nav-link dropdown-toggle text-light"
-                            href="#"
-                            role="button"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                        ></a>
-                        <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
-
-                            <?php if (!isset($_SESSION['user']) && !isset($_SESSION['admin'])): ?>
-                                <li><a class="dropdown-item" href="/php/login/login.php">Login</a></li>
-                                <li><a class="dropdown-item" href="/php/login/register.php">Sign Up</a></li>
-                            <?php else: ?>
-                                <li><a class="dropdown-item" href="<?= getProfileLink() ?>">Dashboard</a></li>
-                                <li><a class="dropdown-item" href="/php/login/logout.php">Logout</a></li>
-                            <?php endif; ?>
-
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+<nav class="navbar navbar-expand-lg custom-navbar sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/index.php">
+            <img src="/img/navbar-logo.png" alt="logo" class="navbar-logo">
+        </a>
+    </div>
+</nav>
 
 <div class="container details-container">
-    <div class="logo-wrapper">
-        <img class="index-logo" src="../../img/logo.png">
-    </div>
-
     <h1 class="paw-card-h1">Update pet</h1>
-
     <div class="row">
         <?= $layout ?>
     </div>

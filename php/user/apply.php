@@ -10,8 +10,6 @@ if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'user') {
     exit;
 }
 
-
-
 if (!isset($_GET["id"])) {
     header("Location: pets.php");
     exit;

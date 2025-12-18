@@ -82,7 +82,10 @@ $profilePic = getProfilePicture($conn);
 
                 <!-- CONTACT (ALLE) -->
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= BASE_URL ?>contact.php">Contact us</a>
+                    <a class="nav-link" href="<?= BASE_URL ?>php/contact/contact.php">Contact us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= BASE_URL ?>php/messages/start.php">Chat</a>
                 </li>
 
             </ul>

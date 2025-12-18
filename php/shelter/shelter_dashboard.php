@@ -153,8 +153,8 @@ if ($result && mysqli_num_rows($result) > 0) {
                     Pet Listings
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark">
-                    <li><a href="shelter_pets.php" class="dropdown-item">All Pets</a></li>
-                    <li><a href="shelter_add_pet.php" class="dropdown-item">Add New Pet</a></li>
+                    <li><a href="pets.php" class="dropdown-item">All Pets</a></li>
+                    <li><a href="../crud/create.php" class="dropdown-item">Add New Pet</a></li>
                 </ul>
             </li>
 
@@ -170,7 +170,7 @@ if ($result && mysqli_num_rows($result) > 0) {
                     Applications
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark">
-                    <li><a href="shelter_applications.php" class="dropdown-item">Review Applications</a></li>
+                    <li><a href="applications.php" class="dropdown-item">Review Applications</a></li>
                 </ul>
             </li>
 
@@ -186,7 +186,7 @@ if ($result && mysqli_num_rows($result) > 0) {
                     Messages
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark">
-                    <li><a href="shelter_messages.php" class="dropdown-item">Inbox</a></li>
+                    <li><a href="../messages/inbox.php" class="dropdown-item">Inbox</a></li>
                 </ul>
             </li>
 
@@ -202,7 +202,7 @@ if ($result && mysqli_num_rows($result) > 0) {
                     Resources
                 </a>
                 <ul class="dropdown-menu dropdown-menu-dark">
-                    <li><a href="shelter_resources.php" class="dropdown-item">Manage Resources</a></li>
+                    <li><a href="resources.php" class="dropdown-item">Manage Resources</a></li>
                 </ul>
             </li>
 

@@ -43,6 +43,7 @@ $stmt->close();
   <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body class="body-pic">
+  <?php require_once "../../components/navbar.php"; ?>
   <main class="container contact-container">
     <div class="paw-card contact-card">
       <div class="paw-card-inner contact-inner">

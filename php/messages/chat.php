@@ -1,13 +1,20 @@
 <?php
-session_start();
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+require_once __DIR__ . '/../../components/db_connect.php';
+require_once __DIR__ . '/../functions/get_profile.php';
+require_once __DIR__ . '/../../components/navbar.php';
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 
 $conversation_id = isset($_GET["conversation_id"]) ? (int)$_GET["conversation_id"] : 0;
 if ($conversation_id <= 0) die("Missing conversation_id.");
 
 /** TEST-MODUS: sender_role wechseln */
 $sender_role = (isset($_GET["as"]) && $_GET["as"] === "shelter") ? "shelter" : "user";
-
-require_once __DIR__ . "/../../components/db_connect.php";
 
 if (!isset($conn) || !($conn instanceof mysqli)) {
     die("DB connection not found.");

@@ -24,8 +24,11 @@ require_once "components/navbar.php";
 
 
 
+
+
+
 /* DB */
-$sql = "SELECT * FROM Animal";
+$sql = "SELECT * FROM animal";
 $result = mysqli_query($conn, $sql);
 
 $layout = "";

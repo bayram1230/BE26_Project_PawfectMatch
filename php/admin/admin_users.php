@@ -1,9 +1,10 @@
 <?php
-session_start();
 
 require_once "../../components/db_connect.php";
 require_once "../functions/get_profile.php";
 require_once "../../components/navbar.php";
+require_once "../functions/user_restriction.php";
+requireAdmin();
 
 /* Admin check */
 if (

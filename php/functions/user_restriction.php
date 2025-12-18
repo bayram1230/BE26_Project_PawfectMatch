@@ -1,34 +1,52 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-/* ---------------------------------
-   Require login (User oder Admin)
----------------------------------- */
-function requireLogin()
-{
-    if (!isset($_SESSION['user']) && !isset($_SESSION['admin'])) {
+/* Login nötig (user, admin, shelter) */
+function requireLogin() {
+    if (!isset($_SESSION['role'])) {
         echo "
-            <script>
-                alert('You must be logged in to access this page.');
-                window.location.href = '/index.php';
-            </script>
-        ";
+        <script>
+            alert('You must be logged in to access this page.');
+            window.location.href = '/php/login/login.php';
+        </script>";
         exit;
     }
 }
 
-/* ---------------------------------
-   Require admin only
----------------------------------- */
-function requireAdmin()
-{
-    if (!isset($_SESSION['admin'])) {
+/* Nur Admin */
+function requireAdmin() {
+    if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
         echo "
-            <script>
-                alert('You do not have permission to perform this action.');
-                window.history.back();
-            </script>
-        ";
+        <script>
+            alert('Admin access only.');
+            window.history.back();
+        </script>";
+        exit;
+    }
+}
+
+/* Nur Shelter */
+function requireShelter() {
+    if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'shelter') {
+        echo "
+        <script>
+            alert('Shelter access only.');
+            window.history.back();
+        </script>";
+        exit;
+    }
+}
+
+/* Nur User */
+function requireUser() {
+    if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'user') {
+        echo "
+        <script>
+            alert('User access only.');
+            window.history.back();
+        </script>";
         exit;
     }
 }

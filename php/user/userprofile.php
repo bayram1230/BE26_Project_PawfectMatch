@@ -1,91 +1,117 @@
 <?php
 session_start();
+require_once "../../components/db_connect.php";
+require_once "../functions/get_profile.php";
+require_once __DIR__ . "/../functions/user_restriction.php";
 
-require_once "components/db_connect.php";
-require_once "components/profile_pic.php";
+requireUser(); // nur User darf rein
 
 
-
-if (!isset($_SESSION["user"]) && !isset($_SESSION["admin"])) {
-    header("Location: php/login/login.php?restricted=true");
+/* nur User darf rein */
+if (!isset($_SESSION['username']) || $_SESSION['role'] !== 'user') {  
+    header("Location: ../login/login.php?restricted=true");
     exit;
 }
 
+$username = $_SESSION['username'];
 
-if (isset($_SESSION["admin"])) {
-    header("Location: dashboard.php");
-    exit;
-}
-
-$username = $_SESSION["user"];
-
-$sql = "SELECT * FROM Users WHERE Username = '$username'";
-$result = mysqli_query($conn, $sql);
+$sql = "SELECT * FROM Users WHERE Username = ?";
+$stmt = mysqli_prepare($conn, $sql);
+mysqli_stmt_bind_param($stmt, "s", $username);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
 $row = mysqli_fetch_assoc($result);
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>User Profile - <?= htmlspecialchars($row["Name"]) ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Profile - <?= $row["Name"] ?></title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-      <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/style.css">
+
+
+    <style>
+        body {
+            background: #f4f6f8;
+        }
+        .profile-card {
+            border-radius: 18px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            background: #9affb4;
+        }
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid #fff;
+        }
+        .profile-btn {
+            border-radius: 8px;
+            font-weight: 600;
+        }
+      .offcanvas,
+.offcanvas-start {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+
+    </style>
 </head>
-<body>
 
+<body class="body-pic">
 
-<?php
-include_once "navbar-user.php";
-?> 
+<?php require_once "../../components/navbar.php"; ?>
+<?php require_once __DIR__ . "/user_menu.php"; ?>
+<?php require_once __DIR__ . "/btn.php"; ?>
 
 <div class="container my-5">
 
+
     <div class="row justify-content-center">
-        <div class="col-md-10 col-lg-8">
+        <div class="col-md-8 col-lg-8">
 
-            <div class="card shadow-lg border-0 rounded-4">
+            <div class="card profile-card p-4 text-center">
 
-                <div class="card-body text-center p-4">
-
-                   
-                    <div class="text-center mb-3">
-                <img src="img/<?= htmlspecialchars($row["Img"]) ?>"
-                    class="rounded border"
-                    alt="profile picture"
-                    style="width:150px; height:150px; object-fit:cover;">
+                
+                <div class="mb-3 mt-4">
+                    <img
+                src="../../img/<?= htmlspecialchars($row['Img'] ?? 'default-users.png') ?>"
+                class="profile-img"
+                onerror="this.src='../../img/default-users.png'"
+                >
                 </div>
 
-                    
-                    <h3 class="fw-bold mb-1">
-                        <?= htmlspecialchars($row["Username"]) ?>
-                    </h3>
+                
+                <h3 class="fw-bold mb-3">
+                    <?= htmlspecialchars($row["Username"]) ?>
+                </h3> <br> 
+                <hr class="border border-dark border-1 opacity-100">
+                
 
-                    <div class="text-start px-3">
-                        <p class="mb-2">
-                            <strong>Full Name:</strong>
-                            <?= htmlspecialchars($row["Name"]) ?>
-                        </p>
-                    </div>
+                
+                <div class="text-start">
+                    <p class="mb-2">
+                        <strong>Full Name:</strong><br>
+                        <?= htmlspecialchars($row["Name"]) ?>
+                    </p> <br>
 
-                    <div class="text-start px-3">
-                        <p class="mb-2">
-                            <strong>Email:</strong>
-                            <?= htmlspecialchars($row["Email"]) ?>
-                        </p>
-                    </div>
-                      
+                    <p class="mb-3">
+                        <strong>Email:</strong><br>
+                        <?= htmlspecialchars($row["Email"]) ?>
+                    </p>
+                </div> <br>
 
-                    
-                    <div class="d-flex justify-content-center gap-2 mt-4">
-                        <a href="update_profile.php" class="btn btn-success px-4">
-                            Edit Profile
-                        </a>
-                    </div>
-
-                </div>
+               
+                <a href="update_profile.php"
+                   class="btn btn-dark w-25 profile-btn mt-2">
+                    Edit Profile
+                </a>
 
             </div>
 
@@ -93,6 +119,7 @@ include_once "navbar-user.php";
     </div>
 
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -24,8 +24,11 @@ require_once "components/navbar.php";
 
 
 
+
+
+
 /* DB */
-$sql = "SELECT * FROM Animal";
+$sql = "SELECT * FROM animal";
 $result = mysqli_query($conn, $sql);
 
 $layout = "";
@@ -89,6 +92,8 @@ if ($result && mysqli_num_rows($result) > 0) {
     <link href="css/style.css" rel="stylesheet">
 </head>
 <body class="body-pic">
+    <!-- NAVBAR -->
+
     <!-- HERO -->
     <header class="hero-section">
         <video id="heroVideo" muted playsinline preload="auto">

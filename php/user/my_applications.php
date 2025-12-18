@@ -1,16 +1,14 @@
 <?php
 session_start();
-require_once "components/db_connect.php";
-require_once "components/profile_pic.php";
+require_once __DIR__ . "/../../components/db_connect.php";
+require_once __DIR__ . "/../functions/get_profile.php";
+require_once __DIR__ . "/../functions/user_restriction.php";
+
+requireUser(); // nur User darf rein
 
 
 
-if (!isset($_SESSION["user"])) {
-    header("Location: php/login/login.php?restricted=true");
-    exit;
-}
-
-$username = $_SESSION["user"];
+$username = $_SESSION["username"];
 
 // alle Bewerbungen des Users holen mit Tierdetails
 $sql = "
@@ -30,14 +28,16 @@ $result = mysqli_query($conn, $sql);
     <title>My Applications</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-      <link href="css/style.css" rel="stylesheet">
+      <link href="../../css/style.css" rel="stylesheet">
 </head>
-<body>
+<body class="body-pic">
 
-<?php include_once "navbar-user.php"; ?>
+<?php require_once "../../components/navbar.php"; ?>
+<?php require_once __DIR__ . "/user_menu.php"; ?>
+<?php require_once __DIR__ . "/btn.php"; ?>
 
 <div class="container my-5">
-    <h1 class="mb-4 text-center">My Applications</h1>
+    <h1 class="mb-4 text-center text-white">My Applications</h1>
 
     <?php
     
@@ -57,7 +57,7 @@ $result = mysqli_query($conn, $sql);
             </div>";
         }
     } else {
-        echo "<p class='text-center'>You have no adoption applications yet.</p>";
+        echo "<p class='text-center text-white'>You have no adoption applications yet.</p>";
     }
     ?>
 </div>

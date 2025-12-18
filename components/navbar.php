@@ -3,9 +3,13 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+require_once __DIR__ . "/db_connect.php";
+require_once __DIR__ . "/../php/functions/get_profile.php";
+
 $role = $_SESSION['role'] ?? 'guest';
-$profilePic = $profilePic ?? 'default-users.png';
+$profilePic = getProfilePicture($conn);
 ?>
+
 
 <nav class="navbar navbar-expand-lg custom-navbar sticky-top">
     <div class="container-fluid">
@@ -61,7 +65,7 @@ $profilePic = $profilePic ?? 'default-users.png';
 
                         <!-- USER + ADMIN -->
                         <?php if ($role === 'user' || $role === 'admin'): ?>
-                            <li><a class="dropdown-item" href="<?= BASE_URL ?>my_applications.php">My Applications</a></li>
+                            <li><a class="dropdown-item" href="<?= BASE_URL ?>/../php/user/my_applications.php">My Applications</a></li>
                         <?php endif; ?>
                     </ul>
                 </li>

@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 .body-pic {
-  background: url('../img/body2.png');
+  background: url("../img/body2.png");
   background-repeat: repeat;
   background-position: center;
   background-color: rgb(15, 0, 90);
@@ -20,7 +20,7 @@
   width: 100px;
 }
 .custom-navbar {
-  background-image: url('../img/body2.png'),
+  background-image: url("../img/body2.png"),
     linear-gradient(
       180deg,
       #a8ff78 0%,
@@ -212,7 +212,7 @@
   margin: 30px 0 65px 0;
   text-align: left;
   font-size: 48px;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: 700;
   letter-spacing: -0.02em;
   color: #0b5ed7;
@@ -349,7 +349,7 @@
   gap: 20px;
 }
 .details-name {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: 36px;
   font-weight: 700;
   background: #ffffff;
@@ -444,6 +444,64 @@
   white-space: nowrap;
 }
 /* Details End */
+/* Pets Start */
+
+/* Einheitliche Bildgröße */
+.paw-card-img-fixed {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 16px;
+  margin-bottom: 18px;
+}
+
+/* Container für Buttons */
+.paw-card-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+/* Edit Button */
+.paw-btn-edit {
+  flex: 1;
+  background: linear-gradient(135deg, #fff39a, #ffe27a);
+  color: #5c4500;
+  font-weight: 600;
+  border-radius: 12px;
+  border: none;
+  padding: 10px 0;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.paw-btn-edit:hover {
+  background: linear-gradient(135deg, #ffe27a, #fff39a);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Delete Button */
+.paw-btn-delete {
+  flex: 1;
+  background: linear-gradient(135deg, #ff8a8a, #ff5a5a);
+  color: #6b0000;
+  font-weight: 600;
+  border-radius: 12px;
+  border: none;
+  padding: 10px 0;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.paw-btn-delete:hover {
+  background: linear-gradient(135deg, #ff5a5a, #ff8a8a);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/*Pets End*/
+
 /* Admin Dashboard Start */
 .admin-container {
   margin: 20px auto;
@@ -613,7 +671,7 @@
 /* User Dashboard End */
 /* Footer Start */
 footer {
-  background-image: url('../img/body2.png'),
+  background-image: url("../img/body2.png"),
     linear-gradient(
       180deg,
       #ffffff 0%,

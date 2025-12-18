@@ -2,6 +2,7 @@
 session_start();
 
 require_once __DIR__ . "/../../components/db_connect.php";
+require_once "../../components/navbar.php";
 require_once __DIR__ . "/../functions/get_profile.php";
 
 /* ---------------------------------
@@ -147,13 +148,6 @@ $layout .= "
 ";
 
 
-
-
-
-
-
-
-
 } else {
     $layout = "<h3>No data found.</h3>";
 }
@@ -171,9 +165,7 @@ $layout .= "
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body class="body-pic">
-    <!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg custom-navbar sticky-top">
-    <div class="container-fluid">
+
 
         <!-- LOGO -->
         <a class="navbar-brand" href="/index.php">

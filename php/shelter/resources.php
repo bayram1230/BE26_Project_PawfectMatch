@@ -1,5 +1,8 @@
 <?php
 require_once "../../components/db_connect.php";
+require_once "../../components/navbar.php";
+ require_once "../functions/user_restriction.php";
+
 
 
 if(!is_dir('uploads')){
@@ -30,6 +33,7 @@ $files = array_diff(scandir('uploads'), ['.', '..']);
 <meta charset="UTF-8">
 <title>Resources</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+<link href="../../css/style.css" rel="stylesheet">
 </head>
 <body>
 <div class="container mt-5">
@@ -51,5 +55,7 @@ $files = array_diff(scandir('uploads'), ['.', '..']);
 </ul>
 
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+ 
 </body>
 </html>

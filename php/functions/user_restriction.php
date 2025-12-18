@@ -50,3 +50,18 @@ function requireUser() {
         exit;
     }
 }
+
+/* Admin ODER Shelter */
+function requireAdminOrShelter() {
+    if (
+        !isset($_SESSION['role']) ||
+        !in_array($_SESSION['role'], ['admin', 'shelter'])
+    ) {
+        echo "
+        <script>
+            alert('Admin or Shelter access only.');
+            window.history.back();
+        </script>";
+        exit;
+    }
+}

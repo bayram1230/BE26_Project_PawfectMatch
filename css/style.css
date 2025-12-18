@@ -518,6 +518,20 @@
   color: #0b5ed7;
   border: none;
   font-weight: bold;
+  max-width: 180px;
+  width: 100%;
+  font-size: 20px;
+}
+.operations-btn:hover {
+  transform: scale(1.05);
+  color: #0b5ed7;
+  border: none;
+}
+.admin-operations-btn {
+  background: linear-gradient(90deg, #78ffd6, #a8ff78);
+  color: #0b5ed7;
+  border: none;
+  font-weight: bold;
  display: inline-flex;
  justify-content: center;
  align-items: center;
@@ -526,7 +540,7 @@
   font-size: 30px;
 
 }
-.operations-btn:hover {
+.admin-operations-btn:hover {
   transform: scale(1.05);
   color: #0b5ed7;
   border: none;
@@ -660,7 +674,7 @@ margin: 0 auto;
     row-gap: 24px;
     text-align: center;
   }
-   .operations-btn {
+   .admin-operations-btn {
     display: flex;
     margin: 0 auto;
     font-size: 28px;
@@ -680,7 +694,7 @@ margin: 0 auto;
   .admin-hero-title {
     font-size: 28px;
   }
-  .operations-btn{
+  .admin-operations-btn{
     font-size: 20px;
     width: 100%;
   }

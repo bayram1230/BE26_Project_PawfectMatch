@@ -54,21 +54,37 @@ if ($result && mysqli_num_rows($result) === 1) {
         $imgPath = "../../img/default-animals.png";
     }
 
-    /* BUTTON logic */
-    if (isset($_SESSION['user_id'])) {
-        $buttonHtml = "
-            <a href='../user/apply.php?id={$row['ID']}' class='details-inline-btn'>
-               🐾 Take Me Home 🐾
-            </a>
-        ";
-    } else {
-        $buttonHtml = "
-            <button class='details-inline-btn'
-                    onclick=\"alert('You have to be logged in to take a pet home');\">
-               🐾 Take Me Home 🐾
-            </button>
-        ";
-    }
+    if (!isset($_SESSION['user_id'])) {
+
+    // GAST
+    $buttonHtml = "
+        <button class='details-inline-btn'
+                onclick=\"alert('You have to be logged in to take a pet home');\">
+           🐾 Take Me Home 🐾
+        </button>
+    ";
+
+} elseif ($_SESSION['role'] !== 'user') {
+
+    // ADMIN oder SHELTER
+    $buttonHtml = "
+        <button class='details-inline-btn'
+                onclick=\"alert('You can’t perform this action');\">
+           🐾 Take Me Home 🐾
+        </button>
+    ";
+
+} else {
+
+    // NORMALER USER
+    $buttonHtml = "
+        <a href='../user/apply.php?id={$row['ID']}'
+           class='details-inline-btn'>
+           🐾 Take Me Home 🐾
+        </a>
+    ";
+}
+
 
     $layout .= "
     <div class='col'>

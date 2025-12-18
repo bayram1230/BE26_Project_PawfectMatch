@@ -91,7 +91,7 @@ $successfulAdoptions = mysqli_fetch_assoc(
     <!-- ================= OPERATIONS BUTTON ================= -->
     <div class="admin-welcome">
         <button
-            class="btn operations-btn"
+            class="btn admin-operations-btn"
             data-bs-toggle="offcanvas"
             data-bs-target="#adminOffcanvas"
         >

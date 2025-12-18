@@ -45,10 +45,11 @@ $profilePic = getProfilePicture($conn);
                         Pets
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark">
-                        <li><a class="dropdown-item" href="<?= BASE_URL ?>fostered_pets.php">Fostered Pets</a></li>
+                        <li><a class="dropdown-item" href="<?= BASE_URL ?>php/pets/fostered_pets.php">Fostered Pets</a></li>
                         <li><a class="dropdown-item" href="<?= BASE_URL ?>pets.php">Search Pets</a></li>
-                        <li><a class="dropdown-item" href="<?= BASE_URL ?>adopted_pets.php">Adopted Pets</a></li>
-                        <li><a class="dropdown-item" href="<?= BASE_URL ?>pet_of_week.php">Pet of the Week</a></li>
+                        <li><a class="dropdown-item" href="<?= BASE_URL ?>php/pets/adopted_pets.php">Adopted Pets</a></li>
+                        <li><a class="dropdown-item" href="<?= BASE_URL ?>php/pets/pet_of_week.php">Pet of the Week</a></li>
+                        <li><a class="dropdown-item" href="<?= BASE_URL ?>php/pets/matchmaker.php">Matchmaker</a></li>
                     </ul>
                 </li>
                 <?php endif; ?>
@@ -59,9 +60,9 @@ $profilePic = getProfilePicture($conn);
                         Info
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark">
-                        <li><a class="dropdown-item" href="<?= BASE_URL ?>resources.php">Resource Library</a></li>
-                        <li><a class="dropdown-item" href="<?= BASE_URL ?>stories.php">Adoption Stories</a></li>
-                        <li><a class="dropdown-item" href="<?= BASE_URL ?>volunteer.php">Volunteer Opportunities</a></li>
+                        <li><a class="dropdown-item" href="<?= BASE_URL ?>php/info/ressources.php">Resource Library</a></li>
+                        <li><a class="dropdown-item" href="<?= BASE_URL ?>php/info/stories.php">Adoption Stories</a></li>
+                        <li><a class="dropdown-item" href="<?= BASE_URL ?>php/info/volunteer.php">Volunteer Opportunities</a></li>
 
                         <!-- USER + ADMIN -->
                         <?php if ($role === 'user' || $role === 'admin'): ?>

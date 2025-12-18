@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -6,28 +9,42 @@ require_once __DIR__ . '/../../components/db_connect.php';
 /**
  * Returns avatar filename of logged-in user
  */
-function getProfilePicture($conn) {
-    // Not logged in → default avatar
+function getProfilePicture($conn)
+{
+    // 🔐 Login-Status eindeutig
+    if (!isset($_SESSION['user_id'])) {
+        return "default-users.png";
+    }
+
     if (!isset($_SESSION['username'])) {
         return "default-users.png";
     }
+
     $username = $_SESSION['username'];
-    // IMPORTANT: Username + Img EXACTLY like DB column names
+
     $sql = "SELECT Img FROM users WHERE Username = ?";
     $stmt = mysqli_prepare($conn, $sql);
+
     if (!$stmt) {
         return "default-users.png";
     }
+
+    // ✅ HIER war der White-Screen-Fehler
     mysqli_stmt_bind_param($stmt, "s", $username);
+
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
-    if ($row = mysqli_fetch_assoc($result)) {
-        return (!empty($row['Img']))
-            ? $row['Img']
-            : "default-users.png";
+
+    if ($result && $row = mysqli_fetch_assoc($result)) {
+        if (!empty($row['Img'])) {
+            return $row['Img'];
+        }
     }
+
+    // 👇 Fallback IMMER
     return "default-users.png";
 }
+
 /**
  * Base URL of the project (IMPORTANT!)
  */
